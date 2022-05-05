@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../contexts/Auth';
 import { userComplete, setNewUserData } from '../../services/firestoreService'
+import React = require('react');
 
 export function HomeScreen(){
 
