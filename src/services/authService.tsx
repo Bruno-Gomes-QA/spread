@@ -21,14 +21,6 @@ async function signIn(email: string, password: string): Promise<AuthData> {
 
 async function signInGoogle(userInfo): Promise<AuthData> {
 
-    var userExist
-    userEmail(userInfo).then((value) => {
-        userExist = value
-    }).catch((error) => {
-        error
-    });
-
-    if (userExist) {
         return new Promise((resolve, reject) => {
             const auth = getAuth();
     
@@ -43,7 +35,7 @@ async function signInGoogle(userInfo): Promise<AuthData> {
                 reject((error));
             });
         })
-    } else {
+
         return new Promise((resolve, reject) => {
             const auth = getAuth();
     
@@ -58,7 +50,25 @@ async function signInGoogle(userInfo): Promise<AuthData> {
                 reject((error));
             });
         })
-    }
+
+}
+
+async function signUpGoogle(userInfo): Promise<AuthData> {
+
+    return new Promise((resolve, reject) => {
+        const auth = getAuth();
+
+        createUserWithEmailAndPassword(auth, userInfo.email, userInfo.id)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            resolve ({
+                user,
+            });
+        })
+        .catch((error) => {
+            reject((error));
+        });
+    })
 
 }
 
@@ -100,4 +110,4 @@ function checkCurrentUser() {
     }
 }
 
-export const authService = {signIn, signInGoogle, signUp, signOutUser, checkCurrentUser};
+export const authService = {signIn, signInGoogle, signUp, signUpGoogle, signOutUser, checkCurrentUser};

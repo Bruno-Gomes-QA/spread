@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../contexts/Auth';
 import { userComplete, setNewUserData } from '../../services/firestoreService'
-import React = require('react');
 
 export function HomeScreen(){
 
@@ -18,7 +17,6 @@ export function HomeScreen(){
     }).catch((error) => {
         error
     });
-    const [xpto, setXpto] = useState(false);
 
     useEffect(() =>{
         if(user && userExist){
@@ -33,7 +31,6 @@ export function HomeScreen(){
     function handleButtonPressSettings(){
 
         setIsLoading(true);
-        setXpto(true)
         console.log('Pressionando');
         setTimeout(() => {
             setIsLoading(false);

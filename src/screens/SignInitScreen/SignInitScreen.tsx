@@ -41,7 +41,6 @@ export function SignInitScreen(){
     },[response])
 
     async function getUserData() {
-        console.log('estive aqui')
         let userInfoResponse = await fetch("https://www.googleapis.com/userinfo/v2/me", {
           headers: { Authorization: `Bearer ${accessToken}`}
         });

@@ -11,6 +11,7 @@ interface AuthContextData {
     signIn: (email: string, password: string) => Promise<AuthData>;
     signInGoogle: (userInfo) => Promise<AuthData>;
     signUp: (email: string, password: string) => Promise<AuthData>;
+    signUpGoogle: (userInfo) => Promise<AuthData>;
     signOut: () => Promise<AuthData>;
     checkCurrentUser: () => Promise<AuthData>;
 }
@@ -54,7 +55,21 @@ export const AuthProvider: React.FC = ({children}) => {
     
             return user;
         } catch (error) {
-            Alert.alert(error.code, error.message);
+            console.log(error.code, error.message)
+            signUpGoogle(userInfo);
+        }
+
+    }
+
+    async function signUpGoogle(userInfo): Promise<AuthData>
+    {
+        try {
+            const user = await authService.signUpGoogle(userInfo);
+
+            setAuth(user);
+    
+            return user;
+        } catch (error) {
             console.log(error.code, error.message)
         }
 
@@ -117,7 +132,7 @@ export const AuthProvider: React.FC = ({children}) => {
     }
 
     return (
-        <AuthContext.Provider value={{authData, signIn, signInGoogle, signOut, signUp, checkCurrentUser}}>
+        <AuthContext.Provider value={{authData, signIn, signInGoogle, signOut, signUp, signUpGoogle, checkCurrentUser}}>
             {children}
         </AuthContext.Provider>
     )
