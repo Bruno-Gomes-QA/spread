@@ -1,32 +1,20 @@
-import { Container, ButtonArea } from './style';
-import Button from '../../components/Button';
-import { useState, useEffect } from 'react';
+import { 
+    Container,
+    ButtonArea,
+    ButtonRow,
+    PaddingButtonRow,
+    SaldoArea,
+    SaldoText,
+    SaldoTextTitle 
+} from './style';
+import ButtonHome from '../../components/ButtonHome';
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../contexts/Auth';
-import { userComplete, setNewUserData } from '../../services/firestoreService'
 
 export function HomeScreen(){
 
-    const {checkCurrentUser} = useAuth()
     const navigation = useNavigation();
     const [loading, setIsLoading] = useState(false);
-    const user = checkCurrentUser()
-    var userExist
-    userComplete(user).then((value) => {
-        userExist = value
-    }).catch((error) => {
-        error
-    });
-
-    useEffect(() =>{
-        if(user && userExist){
-            setIsLoading(false)
-        } else {
-            setIsLoading(true)
-            setNewUserData(user)
-            setIsLoading(false)
-        }
-    },[])
 
     function handleButtonPressSettings(){
 
@@ -40,14 +28,73 @@ export function HomeScreen(){
 
     return(
         <Container>
+            <SaldoArea>
+                <SaldoTextTitle>
+                    Saldo
+                </SaldoTextTitle>
+                <SaldoText>
+                    R$ 65,00
+                </SaldoText>
+            </SaldoArea>
             <ButtonArea>
-                <Button 
-                    isLoading={loading}
-                    title='Configurações' 
-                    onPressIn={handleButtonPressSettings}
-                    disabled={false}
-                />  
+                <PaddingButtonRow></PaddingButtonRow>
+                <ButtonRow>
+                    <ButtonHome
+                        isLoading={loading}
+                        title='Pix' 
+                        onPressIn={handleButtonPressSettings}
+                        disabled={false}
+                        icon={'API'}
+                    >
+
+                    </ButtonHome>
+                    <ButtonHome
+                        isLoading={loading}
+                        title='Indicações' 
+                        onPressIn={handleButtonPressSettings}
+                        disabled={false}
+                        icon={'barschart'}
+                    >
+                    </ButtonHome>
+                    <ButtonHome
+                        isLoading={loading}
+                        title='Gift Card' 
+                        onPressIn={handleButtonPressSettings}
+                        disabled={false}
+                        icon={'gift'}
+                    >
+                    </ButtonHome>
+                </ButtonRow>
+                <ButtonRow>
+                    <ButtonHome
+                        isLoading={loading}
+                        title='Dicas' 
+                        onPressIn={handleButtonPressSettings}
+                        disabled={false}
+                        icon={'book'}
+                    >
+
+                    </ButtonHome>
+                    <ButtonHome
+                        isLoading={loading}
+                        title='Renovação' 
+                        onPressIn={handleButtonPressSettings}
+                        disabled={false}
+                        icon={'hourglass'}
+                    >
+                    </ButtonHome>
+                    <ButtonHome
+                        isLoading={loading}
+                        title='Shop' 
+                        onPressIn={handleButtonPressSettings}
+                        disabled={false}
+                        icon={'shoppingcart'}
+                    >
+                    </ButtonHome>
+                </ButtonRow>
+                <PaddingButtonRow></PaddingButtonRow>
             </ButtonArea>
+            
         </Container>
     );
 }

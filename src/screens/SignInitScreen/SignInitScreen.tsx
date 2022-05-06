@@ -13,7 +13,7 @@ import {
 
 export function SignInitScreen(){
 
-    const {signInGoogle} = useAuth();
+    const {signUpGoogle} = useAuth();
     const navigation = useNavigation();
     const [loading, setIsLoading] = useState(false);
     const [accessToken, setAccessToken] = useState('');
@@ -52,7 +52,7 @@ export function SignInitScreen(){
     
       async function SignInWithGoogle() {
         getUserData()
-        signInGoogle(userInfo)
+        signUpGoogle(userInfo)
       }
 
     function handleButtonPressEmailAuth(){

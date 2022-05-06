@@ -1,6 +1,5 @@
 import {AuthData} from '../contexts/Auth';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider } from "firebase/auth";
-import {userEmail} from  '../services/firestoreService'
 
 async function signIn(email: string, password: string): Promise<AuthData> {
     return new Promise((resolve, reject) => {
@@ -35,25 +34,10 @@ async function signInGoogle(userInfo): Promise<AuthData> {
                 reject((error));
             });
         })
-
-        return new Promise((resolve, reject) => {
-            const auth = getAuth();
-    
-            createUserWithEmailAndPassword(auth, userInfo.email, userInfo.id)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                resolve ({
-                    user,
-                });
-            })
-            .catch((error) => {
-                reject((error));
-            });
-        })
-
 }
 
 async function signUpGoogle(userInfo): Promise<AuthData> {
+
 
     return new Promise((resolve, reject) => {
         const auth = getAuth();

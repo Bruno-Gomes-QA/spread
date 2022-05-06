@@ -3,29 +3,25 @@ import { doc, setDoc, getDoc } from 'firebase/firestore/lite';
 
 const db = firebase.db
 
-export async function setNewUserData (user) {
+export async function setNewUserData (email) {
 
     const userData = {
-        user_id: user.uid,
-        user_name: 'fullName',
-        user_email: user.email,
-        confirmation_email: user.emailVerified,
-        activate: true,
-        spread_code: user.uid,
+        activate: false,
+        spread_code: '000000',
+        spread_code_activate: false, 
         terms: true,
         init_date: new Date(),
         last_update: new Date(),
     };
 
     const userDataBalance = {
-        user_id: user.uid,
         balance: 0,
         qtd_scattering: 0,
 
     };
 
-    await setDoc(doc(db, "User", user.email), userData);
-    await setDoc(doc(db, "Balance", user.email), userDataBalance);
+    await setDoc(doc(db, "User", email), userData);
+    await setDoc(doc(db, "Balance", email), userDataBalance);
 }
 
 export async function userComplete (user) {

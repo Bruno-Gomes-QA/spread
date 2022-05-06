@@ -6,6 +6,7 @@ import CheckBox  from '../../components/CheckBox'
 import InputButton from '../../components/InputButton';
 import { useAuth } from '../../contexts/Auth';
 import { ValidarEmail, ValidarPassword } from '../../components/Checks';
+import { setNewUserData } from '../../services/firestoreService';
 import {
     Container,
     InputArea,

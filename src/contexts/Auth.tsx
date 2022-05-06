@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { createContext, useState } from "react";
 import { Alert } from 'react-native';
 import { authService } from "../services/authService";
+import { setNewUserData } from '../services/firestoreService';
 
 interface AuthData {
     user;
@@ -55,8 +56,16 @@ export const AuthProvider: React.FC = ({children}) => {
     
             return user;
         } catch (error) {
-            console.log(error.code, error.message)
-            signUpGoogle(userInfo);
+            if (error.code === 'auth/user-not-found') {
+                var errorMessage = 'E-mail não cadastrado';
+                Alert.alert(errorMessage, 'Favor realizar o cadastro');
+            } else if (error.code === 'auth/wrong-password') {
+                var errorMessage = 'Senha Inválida';
+                Alert.alert(errorMessage, 'Tente novamente');
+            } else {
+                var errorMessage = 'Erro desconhecido';
+                Alert.alert(errorMessage, 'Tente novamente');
+            }
         }
 
     }
@@ -67,10 +76,11 @@ export const AuthProvider: React.FC = ({children}) => {
             const user = await authService.signUpGoogle(userInfo);
 
             setAuth(user);
-    
+            setNewUserData(userInfo.email)
             return user;
         } catch (error) {
             console.log(error.code, error.message)
+            signInGoogle(userInfo)
         }
 
     }
@@ -81,7 +91,8 @@ export const AuthProvider: React.FC = ({children}) => {
             const user = await authService.signUp(email, password);
 
             setAuth(user);
-    
+            setNewUserData(email)
+
             return user;
         } catch (error) {
             if (error.code === 'auth/email-already-in-use') {
