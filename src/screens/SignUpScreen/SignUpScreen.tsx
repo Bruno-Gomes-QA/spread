@@ -74,9 +74,7 @@ export function SignUpScreen(){
     return(
             <Container>
                 <HeaderArea></HeaderArea>
-                <LogoArea>
-                    <SpreadLogo width="100%" height={120} ></SpreadLogo>
-                </LogoArea>
+                <SpreadLogo width="100%" height={120} ></SpreadLogo>
                 <InputArea>
                     <InputButton
                         Icon='mail'

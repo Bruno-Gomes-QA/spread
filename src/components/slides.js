@@ -1,8 +1,15 @@
 export default [
     {
         id: '1',
-        title: 'Iniciando no Spread',
-        description: 'Recomendado para iniciantes',
-        image: require('../../assets/spreadname.svg')
+        poster: 'https://firebasestorage.googleapis.com/v0/b/spread-349216.appspot.com/o/Iniciando.png?alt=media&token=225ff240-29ec-47cc-a735-3e6ba58fbe15'
+    },
+    {
+        id: '2',
+        poster: 'https://firebasestorage.googleapis.com/v0/b/spread-349216.appspot.com/o/Iniciando.png?alt=media&token=225ff240-29ec-47cc-a735-3e6ba58fbe15'
+    },
+    {
+        id: '3',
+        poster: 'https://firebasestorage.googleapis.com/v0/b/spread-349216.appspot.com/o/Iniciando.png?alt=media&token=225ff240-29ec-47cc-a735-3e6ba58fbe15',
+
     }
 ]

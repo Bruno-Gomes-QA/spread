@@ -21,8 +21,8 @@ export const HeaderArea = styled.View`
 `
 
 export const LogoArea = styled.View`
-    padding: 10px
-    width: 100%
+    padding: 10px;
+    width: 100%;
     justify-content: center;
     align-items: center;
 `

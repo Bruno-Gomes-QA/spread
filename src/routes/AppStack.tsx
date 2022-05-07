@@ -13,8 +13,8 @@ export function AppStack(){
                 headerShown: false
             }}
         >   
-            <Stack.Screen name="Home" component={HomeScreen}/>
             <Stack.Screen name="CodeSlide" component={CodeSlideScreen}/>
+            <Stack.Screen name="Home" component={HomeScreen}/>
             <Stack.Screen name="Settings" component={SettingsScreen}/>
         </Stack.Navigator>
     )

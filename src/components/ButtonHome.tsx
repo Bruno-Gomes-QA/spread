@@ -23,7 +23,7 @@ export const TouchableOpacityButtonEnable = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     width: 28%;
-    height: 90%;
+    height: 60%;
     border-radius: 5px;
     margin: 2%;
 `;
@@ -49,11 +49,10 @@ export default ({title, onPressIn, isLoading, disabled, icon}) => {
                 disabled={disabled}
                 onPressIn={onPressIn} 
             >
-                {isLoading? (
-                    <ActivityIndicator color='#000'/> 
-                ) : (
+                <View>
+                    <AntDesign name={icon} size={24} color="#FD8033" />
                     <ButtonTitle>{title}</ButtonTitle>
-                )}
+                </View>
             </TouchableOpacityButtonDisable>
         ) 
     } else {
@@ -62,16 +61,10 @@ export default ({title, onPressIn, isLoading, disabled, icon}) => {
                 disabled={disabled}
                 onPressIn={onPressIn} 
             >
-                
-                {isLoading? (
-                    <ActivityIndicator color='#FFF'/> 
-                ) : (
-                    <View>
-                        <AntDesign name={icon} size={24} color="#FD8033" />
-                        <ButtonTitle>{title}</ButtonTitle>
-                    </View>
-
-                )}
+                <View>
+                    <AntDesign name={icon} size={24} color="#FD8033" />
+                    <ButtonTitle>{title}</ButtonTitle>
+                </View>
             </TouchableOpacityButtonEnable>
         )  
     }

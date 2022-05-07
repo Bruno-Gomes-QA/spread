@@ -1,8 +1,8 @@
 import { 
     Container,
+    Header,
     ButtonArea,
     ButtonRow,
-    PaddingButtonRow,
     SaldoArea,
     SaldoText,
     SaldoTextTitle 
@@ -10,37 +10,47 @@ import {
 import ButtonHome from '../../components/ButtonHome';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import ConfigButton from '../../components/ButtonHomeHeader';
+import SpreadLogo from "../../../assets/spreadnamewhite.svg";
 
 export function HomeScreen(){
 
     const navigation = useNavigation();
-    const [loading, setIsLoading] = useState(false);
 
     function handleButtonPressSettings(){
-
-        setIsLoading(true);
-        console.log('Pressionando');
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
         navigation.navigate('Settings')
     }
 
     return(
         <Container>
-            <SaldoArea>
-                <SaldoTextTitle>
-                    Saldo
-                </SaldoTextTitle>
-                <SaldoText>
-                    R$ 65,00
-                </SaldoText>
-            </SaldoArea>
+            <Header>
+                <ConfigButton
+                    onPressIn={handleButtonPressSettings}
+                    disabled={false}
+                    icon={'user'}
+                >
+
+                </ConfigButton>
+                <SpreadLogo width="60%" height={80}/>
+                <ConfigButton
+                    onPressIn={handleButtonPressSettings}
+                    disabled={false}
+                    icon={'options'}
+                >
+
+                </ConfigButton>
+            </Header>
             <ButtonArea>
-                <PaddingButtonRow></PaddingButtonRow>
+                <SaldoArea>
+                    <SaldoTextTitle>
+                        Saldo
+                    </SaldoTextTitle>
+                    <SaldoText>
+                        R$ 65,00
+                    </SaldoText>
+                </SaldoArea>
                 <ButtonRow>
                     <ButtonHome
-                        isLoading={loading}
                         title='Pix' 
                         onPressIn={handleButtonPressSettings}
                         disabled={false}
@@ -49,7 +59,6 @@ export function HomeScreen(){
 
                     </ButtonHome>
                     <ButtonHome
-                        isLoading={loading}
                         title='Indicações' 
                         onPressIn={handleButtonPressSettings}
                         disabled={false}
@@ -57,7 +66,6 @@ export function HomeScreen(){
                     >
                     </ButtonHome>
                     <ButtonHome
-                        isLoading={loading}
                         title='Gift Card' 
                         onPressIn={handleButtonPressSettings}
                         disabled={false}
@@ -67,7 +75,6 @@ export function HomeScreen(){
                 </ButtonRow>
                 <ButtonRow>
                     <ButtonHome
-                        isLoading={loading}
                         title='Dicas' 
                         onPressIn={handleButtonPressSettings}
                         disabled={false}
@@ -76,7 +83,6 @@ export function HomeScreen(){
 
                     </ButtonHome>
                     <ButtonHome
-                        isLoading={loading}
                         title='Renovação' 
                         onPressIn={handleButtonPressSettings}
                         disabled={false}
@@ -84,7 +90,6 @@ export function HomeScreen(){
                     >
                     </ButtonHome>
                     <ButtonHome
-                        isLoading={loading}
                         title='Shop' 
                         onPressIn={handleButtonPressSettings}
                         disabled={false}
@@ -92,7 +97,6 @@ export function HomeScreen(){
                     >
                     </ButtonHome>
                 </ButtonRow>
-                <PaddingButtonRow></PaddingButtonRow>
             </ButtonArea>
             
         </Container>

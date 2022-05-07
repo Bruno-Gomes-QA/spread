@@ -5,15 +5,16 @@ export const Container = styled.SafeAreaView`
     flex: 1;
     justify-content: center;
     align-items: center;
+    padding-top: 60px;
 `
-export const PaddingButtonRow = styled.View`
+export const Header = styled.View`
     flex-direction: row;
-    width: 100%;
-    height: 20%;
-    align-items: center;
+    width: 95%;
+    height: 10%;
     justify-content: center;
+    align-items: center;
+    padding-bottom: 25px;
 `
-
 export const ButtonRow = styled.View`
     flex-direction: row;
     width: 100%;
@@ -23,18 +24,19 @@ export const ButtonRow = styled.View`
 `
 export const ButtonArea = styled.View`
     background-color: #FFF;
-    border-radius: 30px;
+    border-radius: 40px;
     width: 100%;
-    height: 50%;
+    height: 90%;
     align-items: center;
     justify-content: center;
 `
 export const SaldoArea = styled.View`
-    align-content: center;
+    background-color: #FD8033;
+    border-radius: 30px;
+    width: 90%;
+    height: 30%;
+    align-items: flex-start;
     justify-content: center;
-    width: 100%;
-    height: 20%;
-    padding-bottom: 20%;
 `
 export const SaldoTextTitle = styled.Text`
     text-align: left;
