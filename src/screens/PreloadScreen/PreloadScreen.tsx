@@ -11,7 +11,6 @@ export function PreloadScreen(){
     const navigation = useNavigation();
 
     useEffect(() => {
-        const user = checkCurrentUser;
         setTimeout(() => {
             {authData ? navigation.navigate('Home') : navigation.navigate('SignInit')}
         }, 3000);

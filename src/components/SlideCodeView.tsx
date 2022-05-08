@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { StatusBar, Animated, Text, Image, View, StyleSheet, Dimensions } from 'react-native';
 import styled  from 'styled-components';
@@ -53,6 +54,7 @@ export function SlideCodeView() {
     inputRange: [0, .5, 1],
     outputRange: [0, -height, 0]
   })
+  const navigation = useNavigation();
 
   return (
     <View style={{flex: 1}}>
@@ -100,7 +102,7 @@ export function SlideCodeView() {
       />
       <View style={{position: 'absolute', bottom: 0, height: height * .25, padding: 20, width, justifyContent: "space-between"}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => {navigation.navigate('Home')}}>
           <View style={{paddingVertical: 16, paddingHorizontal: 22, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.8)'}}>
               <Text style={{fontSize: 16, fontWeight: '400', opacity: .9, letterSpacing: 1}}>Selecionar</Text>
             </View>

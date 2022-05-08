@@ -42,7 +42,7 @@ export const ButtonTitle = styled.Text`
     padding-top: 1%;
 `;
 
-export default ({title, onPressIn, isLoading, disabled, icon}) => {
+export default ({title, onPressIn, disabled, icon}) => {
     if (disabled) {
         return (
             <TouchableOpacityButtonDisable

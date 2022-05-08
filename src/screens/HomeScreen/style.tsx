@@ -53,3 +53,6 @@ export const SaldoText = styled.Text`
     color: #FFF;
     font-weight: bold;
 `
+
+export const TouchableOpacity = styled.TouchableOpacity`
+`
