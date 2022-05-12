@@ -109,13 +109,13 @@ export function ValidarEmail (email) {
 
 export function ValidarPassword (password) {
 
-    const passwordRegex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$$"
+    const passwordRegex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,18}$$"
     const passwordCorrect = password.match(passwordRegex)
 
-    if (passwordCorrect) {
-        return 3
-    } else if (password === '') {
+    if (password === '') {
         return 1
+    } else if (passwordCorrect) {
+        return 3
     } else {
         return 2
     }

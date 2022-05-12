@@ -36,8 +36,6 @@ export function SlideCodeView() {
     outputRange: bgs
   })
 
-  // Math to output [0, 1] range for input based on
-  // scrollX position and width of the screen. 🤓
   const YOLO = Animated.modulo(
     Animated.divide(
         Animated.modulo(scrollX, width),

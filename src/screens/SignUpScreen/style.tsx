@@ -37,6 +37,13 @@ export const SignMessageButtonText =styled.Text`
     font-size: 12px;
     color: #000;
 `;
+export const PassowordInfo =styled.Text`
+    width: 90%;
+    font-size: 9px;
+    color: #FF0000;
+    text-align: center;
+    padding-bottom: 10px;
+`;
 export const SignMessageButtonTextBold =styled.Text`
     font-size: 12px;
     color: #000;

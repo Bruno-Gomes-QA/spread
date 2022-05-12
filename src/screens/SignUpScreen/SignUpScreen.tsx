@@ -6,12 +6,11 @@ import CheckBox  from '../../components/CheckBox'
 import InputButton from '../../components/InputButton';
 import { useAuth } from '../../contexts/Auth';
 import { ValidarEmail, ValidarPassword } from '../../components/Checks';
-import { setNewUserData } from '../../services/firestoreService';
 import {
     Container,
     InputArea,
     HeaderArea,
-    LogoArea,
+    PassowordInfo,
     SignMessageButton,
     SignMessageButtonText,
     SignMessageButtonTextBold,
@@ -28,6 +27,8 @@ export function SignUpScreen(){
     const [passwordValidate, setPasswordValidate] = useState(1);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordValidate, setConfirmPasswordValidate] = useState(1);
+    const [infoPassword, setInfoPassword] = useState(false);
+    const [infoConfirmPassword, setInfoConfirmPassword] = useState(false);
     const [disabledButton, setDisabledButton] = useState(false);
     const [isSelected, setSelection] = useState(false);
 
@@ -35,18 +36,32 @@ export function SignUpScreen(){
 
         setEmailValidate(ValidarEmail(email))
         setPasswordValidate(ValidarPassword(password))
-        setConfirmPasswordValidate(ValidarPassword(confirmPassword))
+        if (confirmPassword === '') {
+            setConfirmPasswordValidate(1)
+        } else if (confirmPassword === password) {
+            setConfirmPasswordValidate(3)
+            setInfoConfirmPassword(false)
+        } else {
+            setConfirmPasswordValidate(2)
+            setInfoConfirmPassword(true)
+        }
 
         const allFilledCorrect = 
         emailValidate === 3 &&
         passwordValidate === 3 &&
-        confirmPassword === password &&
+        confirmPasswordValidate === 3 &&
         isSelected
         
         if (allFilledCorrect) {
             setDisabledButton(false)          
         } else {
             setDisabledButton(true)
+        }
+
+        if (passwordValidate === 2) {
+            setInfoPassword(true)
+        } else {
+            setInfoPassword(false)
         }
 
     }, [email, password, confirmPassword, isSelected])
@@ -87,24 +102,26 @@ export function SignUpScreen(){
                         validate={emailValidate}
                         autoCapitalize={'none'}
                     />
+                    {infoPassword ? <PassowordInfo>Mínimo 8 caracteres, contendo (A-Z, a-z, 0-9, #?!@$%^&*-)</PassowordInfo> : <></>}
                     <InputButton
                         Icon='lock'
                         placeholder='Digite sua senha'
                         value={password} 
                         onChangeText={setPassword}
                         password={true}
-                        maxLength={6}
+                        maxLength={100}
                         keyboardType={"default"}
                         validate={passwordValidate}
                         autoCapitalize={'none'}
                     />
+                    {infoConfirmPassword ? <PassowordInfo>As senhas devem coincidir</PassowordInfo> : <></>}
                     <InputButton
                         Icon='lock'
                         placeholder='Confirme sua senha'
                         value={confirmPassword} 
                         onChangeText={setConfirmPassword}
                         password={true}
-                        maxLength={6}
+                        maxLength={100}
                         keyboardType={"default"}
                         validate={confirmPasswordValidate}
                         autoCapitalize={'none'}

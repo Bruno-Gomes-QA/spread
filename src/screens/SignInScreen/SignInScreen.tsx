@@ -85,11 +85,11 @@ export function SignInScreen(){
                     <InputText>Senha</InputText>
                     <InputButton 
                         Icon='lock'
-                        placeholder='******' 
+                        placeholder='********' 
                         value={password} 
                         onChangeText={setPassword}
                         password={true}
-                        maxLength={6}
+                        maxLength={18}
                         keyboardType={"default"}
                         validate={passwordValidate}
                         autoCapitalize={'none'}

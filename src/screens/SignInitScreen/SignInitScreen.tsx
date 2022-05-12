@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import SpreadLogo from "../../../assets/spreadname.svg"
 import ButtonIcon from '../../components/ButtonIcon';
 import { useAuth } from '../../contexts/Auth';
+import GoogleCredentials from '../../config/googleauthconfig'
 import {
     Container,
     ButtonArea,
@@ -22,10 +23,9 @@ export function SignInitScreen(){
     WebBrowser.maybeCompleteAuthSession();
 
     const [request, response, promptAsync] = Google.useAuthRequest({
-        androidClientId: "954890227561-klbp4e543i3thh3pcaprm0fmuc92pq55.apps.googleusercontent.com",
-        iosClientId: "954890227561-jdvrb4k62j13t51r0r6vfhkh941hka82.apps.googleusercontent.com",
-        expoClientId: "954890227561-03kjo0ftbn95siir5s6ai8hafqod0mjn.apps.googleusercontent.com",
-        redirectUri: "https://auth.expo.io/@spread-indicacoes/spread",
+        androidClientId: GoogleCredentials.androidClientId,
+        iosClientId: GoogleCredentials.iosClientId,
+        expoClientId: GoogleCredentials.expoClientId,
       });
     
     useEffect(() => {
