@@ -1,5 +1,5 @@
 import firebase from '../config/firebaseconfig';
-import { doc, setDoc, getDoc, collection } from 'firebase/firestore/lite';
+import { doc, setDoc, getDoc, updateDoc, collection } from 'firebase/firestore/lite';
 
 const db = firebase.db
 
@@ -9,10 +9,11 @@ export async function setNewUserData (email) {
         balance: 0,
         spreading: 0,
         terms: true,
+        first_login: true,
         init_date: new Date(),
         last_update: new Date(),
     };
-
+    
     const userDataPath = "User/"+email;
     const userDataRef = doc(db, userDataPath);
     
@@ -48,34 +49,19 @@ export async function setNewWithdraw (email) {
     await setDoc(withdrawRegistrerRef, userData);
 }
 
+export async function setFirstLogin(user) {
+
+    const docRef = doc(db, "User", user.email);
+    await updateDoc(docRef, {
+        first_login: false
+      });
+
+}
+
 export async function getUserInfo (user) {
 
     const docRef = doc(db, "User", user.email);
     const docSnap = await getDoc(docRef);
 
     return docSnap.data()
-}
-
-export async function userComplete (user) {
-
-    const docRef = doc(db, 'User', user.email);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-        return true
-    } else {
-        return false
-    }
-}
-
-export async function userEmail (user) {
-
-    const docRef = doc(db, 'User', user.email);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-        return true
-    } else {
-        return false
-    }
 }

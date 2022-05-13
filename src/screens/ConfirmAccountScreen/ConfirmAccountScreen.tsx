@@ -3,21 +3,18 @@ import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import SpreadLogo from "../../../assets/spreadname.svg"
 import Button from '../../components/Button';
+import CheckBox  from '../../components/CheckBox'
 import { FormatarCPF, FormatarData, ValidarFullName, ValidarCPF, ValidarBirthDay } from '../../components/Checks';
 import InputButton from '../../components/InputButton';
-import { setNewUserData } from '../../services/firestoreService';
+import { setFirstLogin } from "../../services/firestoreService";
 import { useAuth } from '../../contexts/Auth';
 import {
     Container,
     InputArea,
-    HeaderArea,
     LogoArea,
-    SignMessageButton,
-    SignMessageButtonText,
-    SignMessageButtonTextBold,
 } from './style';
 
-export function ConfirmEmailScreen(){
+export function ConfirmAccountScreen(){
     
     const navigation = useNavigation();
     const [loading, setIsLoading] = useState(false);
@@ -28,8 +25,8 @@ export function ConfirmEmailScreen(){
     const [birthDay, setBirthDay] = useState('');
     const [birthDayValidate, setBirthDayValidate] = useState(1);
     const [disabledButton, setDisabledButton] = useState(false);
+    const [isSelected, setSelection] = useState(false);
     const {checkCurrentUser} = useAuth();
-    var promiseUser;
 
     useEffect(() => {
 
@@ -39,27 +36,32 @@ export function ConfirmEmailScreen(){
         setFullNameValidate(ValidarFullName(fullName))
         setBirthDayValidate(ValidarBirthDay(birthDay))
 
-        const allFilledCorrect = cpfValidate === 3 && birthDayValidate === 3 && fullNameValidate === 3
+        const allFilledCorrect = cpfValidate === 3 && birthDayValidate === 3 && fullNameValidate === 3 && isSelected
 
         if (allFilledCorrect) {
             setDisabledButton(false)          
         } else {
             setDisabledButton(true)
         }
-    }, [cpf, fullName, birthDay])
-
-    function handleButtonPressReturnHome(){
-        navigation.navigate('Home');
-    }
+    }, [cpf, fullName, birthDay, isSelected])
 
     function handleButtonPressCompleteSignUp(){
         setIsLoading(true);
-        promiseUser = checkCurrentUser()
-        console.log(promiseUser)
+        const user = checkCurrentUser()
+        setFirstLogin(user)
         setTimeout(() => {
-            setNewUserData(promiseUser, cpf, fullName, birthDay)
             setIsLoading(false)
         }, 3000);
+        navigation.navigate('Home')
+    }
+
+    function handleSelect(){
+        if (isSelected === true) {
+            setSelection(false)
+        } else {
+            setSelection(true)
+        }
+
     }
 
     return(
@@ -101,6 +103,12 @@ export function ConfirmEmailScreen(){
                         validate={birthDayValidate}
                         autoCapitalize={'none'}
                     />
+                    <CheckBox 
+                        onPressIn={handleSelect}
+                        Check={isSelected}
+                        Title={'Termos de Privacidade e Uso'}
+                    >
+                    </CheckBox>
                     <Button 
                         isLoading={loading} 
                         title='Finalizar Cadastro' 

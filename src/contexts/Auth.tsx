@@ -91,7 +91,7 @@ export const AuthProvider: React.FC = ({children}) => {
             const user = await authService.signUp(email, password);
 
             setAuth(user);
-            setNewUserData(email)
+            setNewUserData(email.toLocaleLowerCase())
 
             return user;
         } catch (error) {

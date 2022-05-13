@@ -6,7 +6,7 @@ import styled  from 'styled-components';
 export const TouchableOpacity = styled.TouchableOpacity`
 `
 const {width, height} = Dimensions.get('screen');
-const bgs = ['#F65E00', '#FF8514', '#FFAF28'];
+const bgs = ['#FD8033', '#F65E00', '#FFAF28'];
 const DATA = [
   {
     "key": "1",
