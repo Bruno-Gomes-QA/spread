@@ -51,7 +51,7 @@ export function SignInScreen(){
     }
 
     function handleButtonPressSignUp(){
-        navigation.navigate('SignUp');
+        navigation.navigate('WelcomeScreen');
     }
 
     function handleSelect(){

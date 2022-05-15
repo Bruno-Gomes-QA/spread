@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Container, View } from './style';
+import { Container, View, LoadingText } from './style';
 import { useAuth } from "../../contexts/Auth";
 import LottieView from 'lottie-react-native';
 
@@ -10,7 +10,7 @@ export function LoadingScreen(){
 
     useEffect(() => {
         setTimeout(() => {
-            {authData ? console.log('Logado') : navigation.navigate('SignInit')}
+            {authData ? navigation.navigate('Home') : navigation.navigate('WelcomeScreen')}
         }, 3000);
 
     }, []);
@@ -19,12 +19,11 @@ export function LoadingScreen(){
         <Container>
             <View>
                 <LottieView
-                    source={require('../../../assets/loading.json')}
+                    source={require('../../../assets/loading_time.json')}
                     autoPlay={true}
                     loop={true}
                 />
             </View>
-
         </Container>
     );
 }

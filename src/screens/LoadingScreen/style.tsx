@@ -13,3 +13,11 @@ export const View = styled.View`
     justify-content: center;
     align-items: center;
 `
+export const LoadingText = styled.Text`
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 60%;
+`

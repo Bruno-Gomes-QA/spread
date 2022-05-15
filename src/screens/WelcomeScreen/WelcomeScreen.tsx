@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Container, View, ButtonView, TitleText, SubTitleText } from './style';
+import { Container, ButtonArea, ButtonViewArea, ContainerInit, View, InitView, ButtonAreaClient, LogoArea, ButtonView, ButtonsArea, TitleText, SubTitleText } from './style';
 import { useAuth } from "../../contexts/Auth";
+import ButtonWhite from "../../components/ButtonWhite";
 import ButtonIcon from "../../components/ButtonIcon";
 import LottieView from 'lottie-react-native';
+import SpreadLogo from "../../../assets/spreadname.svg"
+import { SimpleLineIcons } from '@expo/vector-icons';
 
 export function WelcomeScreen(){
 
@@ -35,32 +38,51 @@ export function WelcomeScreen(){
         {
             "key": "4",
             "title": "Spread!",
-            "description": "Agora comece a espalhar seu código para amigos e familiares e ganhe recompensas para cada novo usuário que utilizar seu código.",
+            "description": "Agora comece a espalhar para amigos e familiares e ganhe recompensas para cada novo usuário que utilizar seu código.",
             "animation": require('../../../assets/spreading.json'),
+        },
+        {
+            "key": "5",
+            "title": "Transfira seus ganhos!",
+            "description": "Você pode realizar pix para seus amigos ou contas de sua titularidade de forma rápida e segura",
+            "animation": require('../../../assets/pixwithdraw.json'),
         },
       ]
     const {checkCurrentUser} = useAuth();
     const navigation = useNavigation();
-    const [card, setCard] = useState(0)
+    const [initSignUp, setInitSignUp] = useState(false);
+    const [card, setCard] = useState(0);
+    const [lastCard, setLastCard] = useState(false);
 
     useEffect(() => {
 
     }, []);
 
     function nextCard () {
-        if (card === 4) {
-            navigation.navigate('ConfirmAccountScreen')
+        if (card === 5) {
+            navigation.navigate('SignUp')
             setTimeout(() => {
                 setCard(0)
+                setLastCard(false)
             }, 1000);
+        } else if(card === 4) {
+            setCard(card+1)
+            setLastCard(true)
         } else {
             setCard(card+1)
         }
-
-        console.log(card)
     }
 
-    return (
+    function prevCard () {
+        if (card === 0) {
+            setInitSignUp(false)
+        } else {
+            setCard(card-1)
+        }
+    }
+
+    if (initSignUp) {
+        return (
             <Container>
                 <TitleText>
                     {DATA[card].title}
@@ -75,17 +97,82 @@ export function WelcomeScreen(){
                         loop={true}
                     />
                 </View>
-                <ButtonView>
-                    <ButtonIcon
-                            title={"Próximo"}
-                            onPressIn={nextCard}
+                {lastCard ? 
+                    <ButtonView>
+                        <ButtonIcon
+                                title={"Torna-se Spread"}
+                                onPressIn={nextCard}
+                                isLoading={false}
+                                icon={'rocket'}
+                                disabled={false}
+                            >
+                        </ButtonIcon>
+                    </ButtonView>
+                   
+                :
+                    <ButtonView>
+                        <ButtonViewArea>
+                            <ButtonIcon
+                                    title={"Anterior"}
+                                    onPressIn={prevCard}
+                                    isLoading={false}
+                                    icon={'arrow-left-circle'}
+                                    disabled={false}
+                                >
+                            </ButtonIcon>
+                        </ButtonViewArea>
+                        <ButtonViewArea>
+                            <ButtonIcon
+                                    title={"Próximo"}
+                                    onPressIn={nextCard}
+                                    isLoading={false}
+                                    icon={'arrow-right-circle'}
+                                    disabled={false}
+                                >
+                            </ButtonIcon>
+                        </ButtonViewArea>
+                    </ButtonView>
+                }
+            </Container>
+        )
+    } else {
+        return (
+            <ContainerInit>
+                <LogoArea>
+                    <SpreadLogo width="100%" height={120} ></SpreadLogo>    
+                </LogoArea>
+                <InitView>
+                    <LottieView
+                            source={require('../../../assets/networking.json')}
+                            autoPlay={true}
+                            loop={true}
+                    />
+                </InitView>
+                <ButtonsArea>
+                    <ButtonAreaClient>
+                        <ButtonWhite
+                            title={"Já sou Cliente"}
+                            onPressIn={() => navigation.navigate('SignInit')}
                             isLoading={false}
-                            icon={'action-redo'}
+                            disabled={true}
+                        >
+                        </ButtonWhite>
+                    </ButtonAreaClient>
+                    <ButtonArea>
+                        <ButtonWhite
+                            title={"Fazer Cadastro"}
+                            onPressIn={() => setInitSignUp(true)}
+                            isLoading={false}
                             disabled={false}
                         >
-                    </ButtonIcon>
-                </ButtonView>
-            </Container>
-            )
+                        </ButtonWhite>
+                    </ButtonArea>
+                    <ButtonArea></ButtonArea>
+                    <ButtonArea></ButtonArea>
+                </ButtonsArea>
+            </ContainerInit>
+        )
+    }
+
 
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { WelcomeScreen } from '../screens/WelcomeScreen/WelcomeScreen';
 import { SignInScreen } from '../screens/SignInScreen/SignInScreen';
 import { LoadingScreen } from '../screens/LoadingScreen/LoadingScreen';
 import { SignUpScreen } from '../screens/SignUpScreen/SignUpScreen';
@@ -10,7 +11,6 @@ const Stack = createNativeStackNavigator();
 export function AuthStack(){
     return(
         <Stack.Navigator
-            initialRouteName='LoadingScreen'
             screenOptions={{
                 headerShown: false
             }}
@@ -19,6 +19,7 @@ export function AuthStack(){
                 name="LoadingScreen" 
                 component={LoadingScreen}
                 />    
+            <Stack.Screen name="WelcomeScreen" component={WelcomeScreen}/>    
             <Stack.Screen name="SignIn" component={SignInScreen}/>
             <Stack.Screen name="SignUp" component={SignUpScreen}/>
             <Stack.Screen name="SignInit" component={SignInitScreen}/>
