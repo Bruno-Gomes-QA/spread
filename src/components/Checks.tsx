@@ -43,6 +43,50 @@ export function FormatarData(birthDay) {
     return strValor
 }
 
+export function FormatarNumber(number) {
+
+    var strValor
+	var strTemp
+
+    strTemp = number.replace(".", "");
+    strTemp = strTemp.replace("-", "");
+    strTemp = strTemp.replace("(", "");
+    strTemp = strTemp.replace(")", "");
+    strTemp = strTemp.replace(" ", "");
+    strValor = strTemp;
+
+    if (strValor.length < 4 && strValor.length > 1) {
+        strValor = '(' + strValor.substring(0, 2) + ')' + ' ' + strValor.substring(2, 3);
+    } else if (strValor.length > 10) {
+        strValor = '(' + strValor.substring(0, 2) + ')' + ' ' + strValor.substring(2, 3) + strValor.substring(3, 7) + '-' + strValor.substring(7, 11);
+    } else {
+        strValor = number
+    }
+
+    return strValor
+
+}
+
+export function FormatarCep(cep) {
+
+    var strValor
+	var strTemp
+
+    strTemp = cep.replace(".", "");
+    strTemp = strTemp.replace("-", "");
+    strTemp = strTemp.replace(" ", "");
+    strValor = strTemp;
+
+    if (strValor.length > 5) {
+        strValor = strValor.substring(0, 5) + '-' + strValor.substring(5, 8)
+    } else {
+        strValor = cep
+    }
+
+    return strValor
+
+}
+
 export function ValidarFullName(fullName) {
 
     if (fullName.length > 5) {
@@ -58,8 +102,9 @@ export function ValidarCPF(cpf) {
 
     var Soma;
     var Resto;
-    var strCPF
-	var strTemp
+    var strCPF;
+	var strTemp;
+    var i;
     Soma = 0;   
 
     strTemp = cpf.replace(".", "");
@@ -131,3 +176,4 @@ export function ValidarBirthDay (birthDay) {
         return 2
     }
 }
+

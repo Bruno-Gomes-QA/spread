@@ -12,8 +12,7 @@ export const TouchableOpacityButtonDisable = style.TouchableOpacity`
 
 export const Text = style.Text`
     color: #000;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 12px;
     padding-left: 10px;
     text-align: center;
 `;

@@ -12,7 +12,6 @@ export function LoadingScreen(){
         setTimeout(() => {
             {authData ? navigation.navigate('Home') : navigation.navigate('WelcomeScreen')}
         }, 3000);
-
     }, []);
 
     return (

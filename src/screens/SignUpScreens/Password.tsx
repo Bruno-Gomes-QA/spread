@@ -2,10 +2,9 @@ import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect } from 'react';
 import SpreadLogo from "../../../assets/spreadname.svg"
 import Button from '../../components/Button';
-import CheckBox  from '../../components/CheckBox'
 import InputButton from '../../components/InputButton';
 import { useAuth } from '../../contexts/Auth';
-import { ValidarEmail, ValidarPassword } from '../../components/Checks';
+import { ValidarPassword } from '../../components/Checks';
 import {
     Container,
     InputArea,
@@ -16,13 +15,11 @@ import {
     SignMessageButtonTextBold,
 } from './style';
 
-export function SignUpScreen(){
+export function PasswordScreen(email){
     
     const {signUp} = useAuth();
     const navigation = useNavigation();
     const [loading, setIsLoading] = useState(false);
-    const [email, setEmail] = useState('');
-    const [emailValidate, setEmailValidate] = useState(1);
     const [password, setPassword] = useState('');
     const [passwordValidate, setPasswordValidate] = useState(1);
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -30,11 +27,10 @@ export function SignUpScreen(){
     const [infoPassword, setInfoPassword] = useState(false);
     const [infoConfirmPassword, setInfoConfirmPassword] = useState(false);
     const [disabledButton, setDisabledButton] = useState(false);
-    const [isSelected, setSelection] = useState(false);
+    const userEmail = email['route']['params']['email'];
 
     useEffect(() => {
 
-        setEmailValidate(ValidarEmail(email))
         setPasswordValidate(ValidarPassword(password))
         if (confirmPassword === '') {
             setConfirmPasswordValidate(1)
@@ -47,10 +43,8 @@ export function SignUpScreen(){
         }
 
         const allFilledCorrect = 
-        emailValidate === 3 &&
         passwordValidate === 3 &&
-        confirmPasswordValidate === 3 &&
-        isSelected
+        confirmPasswordValidate === 3
         
         if (allFilledCorrect) {
             setDisabledButton(false)          
@@ -64,7 +58,7 @@ export function SignUpScreen(){
             setInfoPassword(false)
         }
 
-    }, [email, password, confirmPassword, isSelected])
+    }, [password, confirmPassword, confirmPasswordValidate, passwordValidate])
 
     function handleButtonPressReturnSignIn(){
         navigation.navigate('SignIn');
@@ -72,36 +66,17 @@ export function SignUpScreen(){
 
     function handleButtonPressSignUp(){
         setIsLoading(true);
-        signUp(email, password);
+        signUp(userEmail, password);
         setIsLoading(false);
 
     }
 
-    function handleSelect(){
-        if (isSelected === true) {
-            setSelection(false)
-        } else {
-            setSelection(true)
-        }
-
-    }
 
     return(
             <Container>
                 <HeaderArea></HeaderArea>
                 <SpreadLogo width="100%" height={120} ></SpreadLogo>
                 <InputArea>
-                    <InputButton
-                        Icon='mail'
-                        placeholder='Digite seu melhor e-mail'
-                        value={email} 
-                        onChangeText={setEmail}
-                        password={false}
-                        maxLength={100}
-                        keyboardType={"email-address"}
-                        validate={emailValidate}
-                        autoCapitalize={'none'}
-                    />
                     {infoPassword ? <PassowordInfo>Mínimo 8 caracteres, contendo (A-Z, a-z, 0-9, #?!@$%^&*-)</PassowordInfo> : <></>}
                     <InputButton
                         Icon='lock'
@@ -126,14 +101,9 @@ export function SignUpScreen(){
                         validate={confirmPasswordValidate}
                         autoCapitalize={'none'}
                     />
-                    <CheckBox 
-                        onPressIn={handleSelect}
-                        Check={isSelected}
-                        Title={'Termos de Privacidade e Uso'}
-                    ></CheckBox>
                     <Button 
                         isLoading={loading} 
-                        title='Cadastrar-se' 
+                        title='Finalizar Cadastro' 
                         onPressIn={handleButtonPressSignUp}
                         disabled={disabledButton}
                     />
