@@ -1,18 +1,32 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Container, View, LoadingText } from './style';
 import { useAuth } from "../../contexts/Auth";
 import LottieView from 'lottie-react-native';
 
-export function LoadingScreen(){
+export function LoadingScreen(extraData){
     const {authData} = useAuth();
     const navigation = useNavigation();
+    const [retry, setRetry] = useState(false)
 
     useEffect(() => {
-        setTimeout(() => {
-            {authData ? navigation.navigate('Home') : navigation.navigate('WelcomeScreen')}
-        }, 3000);
-    }, []);
+        if (extraData['extraData']) {
+            setTimeout(() => {
+                {authData ?
+                    navigation.reset({
+                        routes:[{name:'Home'}]
+                    })
+                : 
+                    navigation.reset({
+                        routes:[{name:'WelcomeScreen'}]
+                    })
+                }
+            }, 3000);
+            
+        } else {
+            setRetry(!retry)}
+
+    }, [retry]);
 
     return (
         <Container>

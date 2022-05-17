@@ -1,5 +1,5 @@
 import {AuthData} from '../contexts/Auth';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 
 async function signIn(email: string, password: string): Promise<AuthData> {
     return new Promise((resolve, reject) => {
@@ -16,44 +16,6 @@ async function signIn(email: string, password: string): Promise<AuthData> {
             reject((error))
         });
     })
-}
-
-async function signInGoogle(userInfo): Promise<AuthData> {
-
-        return new Promise((resolve, reject) => {
-            const auth = getAuth();
-    
-            signInWithEmailAndPassword(auth, userInfo.email, userInfo.id)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                resolve ({
-                    user,
-                });
-            })
-            .catch((error) => {
-                reject((error));
-            });
-        })
-}
-
-async function signUpGoogle(userInfo): Promise<AuthData> {
-
-
-    return new Promise((resolve, reject) => {
-        const auth = getAuth();
-
-        createUserWithEmailAndPassword(auth, userInfo.email, userInfo.id)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            resolve ({
-                user,
-            });
-        })
-        .catch((error) => {
-            reject((error));
-        });
-    })
-
 }
 
 async function signUp(email: string, password: string): Promise<AuthData> {
@@ -94,4 +56,4 @@ function checkCurrentUser() {
     }
 }
 
-export const authService = {signIn, signInGoogle, signUp, signUpGoogle, signOutUser, checkCurrentUser};
+export const authService = {signIn, signUp, signOutUser, checkCurrentUser};

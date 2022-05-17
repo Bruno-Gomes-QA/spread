@@ -73,14 +73,10 @@ export function AndressScreen(email){
 
     }, [cep, houseNumber, error, cepValidate])
 
-    function handleButtonPressReturnSignIn(){
-        navigation.navigate('SignIn');
-    }
-
     function handleButtonPressContinue(){
         console.log(email)
         setCepData(userEmail, cep, street, district, city, state, houseNumber, complement)
-            .then((doc) => navigation.navigate('Password', {email: email}))
+            .then((doc) => navigation.navigate('Password', {email: userEmail}))
             .catch((error) => Alert.alert('Erro desconhecido', 'Tente novamente mais tarde'));
     }
 
@@ -107,7 +103,7 @@ export function AndressScreen(email){
                     onChangeText={setStreet}
                     password={false}
                     maxLength={100}
-                    keyboardType={"numeric"}
+                    keyboardType={"default"}
                     validate={1}
                     autoCapitalize={'none'}
                 />
@@ -140,7 +136,7 @@ export function AndressScreen(email){
                     disabled={disabledButton}
                 />
             </InputArea>
-            <SignMessageButton onPressIn={handleButtonPressReturnSignIn}>
+            <SignMessageButton onPressIn={() => navigation.navigate('SignIn')}>
                 <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
                 <SignMessageButtonTextBold>Entrar</SignMessageButtonTextBold>
             </SignMessageButton>

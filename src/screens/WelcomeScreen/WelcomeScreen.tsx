@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Container, ButtonArea, ButtonViewArea, ContainerInit, View, InitView, ButtonAreaClient, LogoArea, ButtonView, ButtonsArea, TitleText, SubTitleText } from './style';
-import { useAuth } from "../../contexts/Auth";
 import ButtonWhite from "../../components/ButtonWhite";
 import ButtonIcon from "../../components/ButtonIcon";
 import LottieView from 'lottie-react-native';
-import SpreadLogo from "../../../assets/spreadname.svg"
-import { SimpleLineIcons } from '@expo/vector-icons';
+import SpreadLogo from "../../../assets/spreadname.svg";
+import {
+    Container,
+    ButtonArea,
+    ButtonViewArea, 
+    ContainerInit, 
+    View, 
+    InitView, 
+    ButtonAreaClient, 
+    LogoArea, 
+    ButtonView, 
+    ButtonsArea, 
+    TitleText, 
+    SubTitleText 
+} from './style';
 
 export function WelcomeScreen(){
 
@@ -48,15 +59,11 @@ export function WelcomeScreen(){
             "animation": require('../../../assets/pixwithdraw.json'),
         },
       ]
-    const {checkCurrentUser} = useAuth();
+
     const navigation = useNavigation();
     const [initSignUp, setInitSignUp] = useState(false);
     const [card, setCard] = useState(0);
     const [lastCard, setLastCard] = useState(false);
-
-    useEffect(() => {
-
-    }, []);
 
     function nextCard () {
         if (card === 5) {
@@ -152,7 +159,7 @@ export function WelcomeScreen(){
                     <ButtonAreaClient>
                         <ButtonWhite
                             title={"Já sou Cliente"}
-                            onPressIn={() => navigation.navigate('SignInit')}
+                            onPressIn={() => navigation.navigate('SignIn')}
                             isLoading={false}
                             disabled={true}
                         >

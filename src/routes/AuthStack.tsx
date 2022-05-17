@@ -19,10 +19,9 @@ export function AuthStack(){
                 headerShown: false
             }}
         >
-            <Stack.Screen 
-                name="LoadingScreen" 
-                component={LoadingScreen}
-                />    
+            <Stack.Screen name="LoadingScreen">
+                {props => <LoadingScreen extraData={true} />}
+            </Stack.Screen>
             <Stack.Screen name="WelcomeScreen" component={WelcomeScreen}/>    
             <Stack.Screen name="SignIn" component={SignInScreen}/>
             <Stack.Screen name="TermsAndConditions" component={TermsAndConditionsScreen}/>

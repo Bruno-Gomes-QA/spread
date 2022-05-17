@@ -42,21 +42,10 @@ export function PasswordScreen(email){
             setInfoConfirmPassword(true)
         }
 
-        const allFilledCorrect = 
-        passwordValidate === 3 &&
-        confirmPasswordValidate === 3
-        
-        if (allFilledCorrect) {
-            setDisabledButton(false)          
-        } else {
-            setDisabledButton(true)
-        }
+        const allFilledCorrect = passwordValidate === 3 && confirmPasswordValidate === 3
+        {allFilledCorrect ? setDisabledButton(false) : setDisabledButton(true)}
 
-        if (passwordValidate === 2) {
-            setInfoPassword(true)
-        } else {
-            setInfoPassword(false)
-        }
+        if (passwordValidate === 2) {setInfoPassword(true)} else {setInfoPassword(false)}
 
     }, [password, confirmPassword, confirmPasswordValidate, passwordValidate])
 

@@ -44,7 +44,7 @@ export function CpfFullNameScreen(email){
 
     function handleButtonPressContinue(){
         setCpfFullName(userEmail, cpf, fullName, birthDay)
-            .then((doc) => navigation.navigate('Andress', {email: email}))
+            .then((doc) => navigation.navigate('Andress', {email: userEmail}))
             .catch((error) => Alert.alert('Erro desconhecido', 'Tente novamente mais tarde'));
     }
 

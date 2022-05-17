@@ -10,9 +10,7 @@ interface AuthData {
 interface AuthContextData {
     authData?: AuthData;
     signIn: (email: string, password: string) => Promise<AuthData>;
-    signInGoogle: (userInfo) => Promise<AuthData>;
     signUp: (email: string, password: string) => Promise<AuthData>;
-    signUpGoogle: (userInfo) => Promise<AuthData>;
     signOut: () => Promise<AuthData>;
     checkCurrentUser: () => Promise<AuthData>;
 }
@@ -47,51 +45,12 @@ export const AuthProvider: React.FC = ({children}) => {
 
     }
 
-    async function signInGoogle(userInfo): Promise<AuthData>
-    {
-        try {
-            const user = await authService.signInGoogle(userInfo);
-
-            setAuth(user);
-    
-            return user;
-        } catch (error) {
-            if (error.code === 'auth/user-not-found') {
-                var errorMessage = 'E-mail não cadastrado';
-                Alert.alert(errorMessage, 'Favor realizar o cadastro');
-            } else if (error.code === 'auth/wrong-password') {
-                var errorMessage = 'Senha Inválida';
-                Alert.alert(errorMessage, 'Tente novamente');
-            } else {
-                var errorMessage = 'Erro desconhecido';
-                Alert.alert(errorMessage, 'Tente novamente');
-            }
-        }
-
-    }
-
-    async function signUpGoogle(userInfo): Promise<AuthData>
-    {
-        try {
-            const user = await authService.signUpGoogle(userInfo);
-
-            setAuth(user);
-            setNewUserData(userInfo.email)
-            return user;
-        } catch (error) {
-            console.log(error.code, error.message)
-            signInGoogle(userInfo)
-        }
-
-    }
-
     async function signUp(email: string, password: string): Promise<AuthData>
     {
         try {
             const user = await authService.signUp(email, password);
 
             setAuth(user);
-            setNewUserData(email.toLocaleLowerCase())
 
             return user;
         } catch (error) {
@@ -143,7 +102,7 @@ export const AuthProvider: React.FC = ({children}) => {
     }
 
     return (
-        <AuthContext.Provider value={{authData, signIn, signInGoogle, signOut, signUp, signUpGoogle, checkCurrentUser}}>
+        <AuthContext.Provider value={{authData, signIn, signOut, signUp, checkCurrentUser}}>
             {children}
         </AuthContext.Provider>
     )

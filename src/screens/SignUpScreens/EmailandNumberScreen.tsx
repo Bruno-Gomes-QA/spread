@@ -37,19 +37,10 @@ export function EmailandNumberScreen(){
         } else {
             setNumberValidate(2)
         }
-
-        if (numberValidate === 3 && emailValidate) {
-            setDisabledButton(false)
-        } else {
-            setDisabledButton(true)
-        }
-        
+        const correctFilled = numberValidate === 3 && emailValidate === 3
+        {correctFilled ? setDisabledButton(false) : setDisabledButton(true)}
 
     }, [email, phoneNumber, numberValidate, emailValidate])
-
-    function handleButtonPressReturnSignIn(){
-        navigation.navigate('SignIn');
-    }
 
     function handleButtonPressContinue(){
         setIsLoading(true);
@@ -94,7 +85,7 @@ export function EmailandNumberScreen(){
                         disabled={disabledButton}
                     />
                 </InputArea>
-                <SignMessageButton onPressIn={handleButtonPressReturnSignIn}>
+                <SignMessageButton onPressIn={() => navigation.navigate('SignIn')}>
                     <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
                     <SignMessageButtonTextBold>Entrar</SignMessageButtonTextBold>
                 </SignMessageButton>

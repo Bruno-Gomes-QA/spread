@@ -24,6 +24,7 @@ export function AppStack(){
         const user = checkCurrentUser();
         getUserInfo(user).then((userInfo) => {
             if (userInfo['first_login']) {
+                console.log(userInfo)
                 setRenderViews(2)
             } else {
                 setRenderViews(1)
@@ -54,8 +55,6 @@ export function AppStack(){
                     headerShown: false
                 }}
             >   
-                <Stack.Screen name="WelcomeScreen" component={WelcomeScreen}/>
-                <Stack.Screen name="ConfirmAccountScreen" component={ConfirmAccountScreen}/>
                 <Stack.Screen name="CodeSlide" component={CodeSlideScreen}/>
                 <Stack.Screen name="Home" component={HomeScreen}/>
                 <Stack.Screen name="Settings" component={SettingsScreen}/>
@@ -71,7 +70,9 @@ export function AppStack(){
                     headerShown: false
                 }}
             >   
-                <Stack.Screen name="LoadingScreen" component={LoadingScreen}/>
+            <Stack.Screen name="LoadingScreen">
+                {props => <LoadingScreen extraData={false} />}
+            </Stack.Screen>
             </Stack.Navigator>
         )
     }
