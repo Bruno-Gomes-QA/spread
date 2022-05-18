@@ -30,9 +30,7 @@ export function AndressScreen(email){
     const userEmail = email['route']['params']['email'];
 
     useEffect(() => {
-
         
-
         setCep(FormatarCep(cep))
 
         if(cep.length === 9){

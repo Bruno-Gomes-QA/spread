@@ -2,7 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { WelcomeScreen } from '../screens/WelcomeScreen/WelcomeScreen';
 import { SignInScreen } from '../screens/SignInScreen/SignInScreen';
-import { LoadingScreen } from '../screens/LoadingScreen/LoadingScreen';
+import { WelcomeLoadingScreen } from '../screens/WelcomeLoadingScreen/WelcomeLoadingScreen';
 import { TermsAndConditionsScreen } from '../screens/SignUpScreens/TermsAndConditionsScreen';
 import { EmailandNumberScreen } from '../screens/SignUpScreens/EmailandNumberScreen';
 import { CpfFullNameScreen } from '../screens/SignUpScreens/CpfFullNameScreen';
@@ -19,9 +19,7 @@ export function AuthStack(){
                 headerShown: false
             }}
         >
-            <Stack.Screen name="LoadingScreen">
-                {props => <LoadingScreen extraData={true} />}
-            </Stack.Screen>
+            <Stack.Screen name="WelcomeLoadingScreen" component={WelcomeLoadingScreen}/>
             <Stack.Screen name="WelcomeScreen" component={WelcomeScreen}/>    
             <Stack.Screen name="SignIn" component={SignInScreen}/>
             <Stack.Screen name="TermsAndConditions" component={TermsAndConditionsScreen}/>

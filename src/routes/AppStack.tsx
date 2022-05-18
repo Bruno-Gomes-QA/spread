@@ -12,13 +12,14 @@ import { IndicacoesScreen } from '../screens/IndicacoesScreen/IndicacoesScreen';
 import { IdeiasScreen } from '../screens/IdeiasScreen/IdeiasScreen';
 import { useAuth } from '../contexts/Auth';
 import { getUserInfo } from '../services/firestoreService';
+import { Alert } from 'react-native';
 
 export function AppStack(){
 
     const {checkCurrentUser} = useAuth()
     const Stack = createNativeStackNavigator();
     const [renderViews, setRenderViews] = useState(0)
-    const [retry, setRetry] = useState(false)
+    const [retry, setRetry] = useState(2)
 
     useEffect(() => {
         const user = checkCurrentUser();
@@ -30,7 +31,11 @@ export function AppStack(){
                 setRenderViews(1)
             }
         }).catch((error) => {
-            setRetry(!retry)
+            if (retry < 6) {
+                setRetry(+1)
+            } else {
+                Alert.alert('Spread não está respondendo', 'Por favor tente novamente mais tarde')
+            }
         });
     },[retry])
 
@@ -70,9 +75,7 @@ export function AppStack(){
                     headerShown: false
                 }}
             >   
-            <Stack.Screen name="LoadingScreen">
-                {props => <LoadingScreen extraData={false} />}
-            </Stack.Screen>
+                <Stack.Screen name="Loading" component={LoadingScreen}/>
             </Stack.Navigator>
         )
     }
