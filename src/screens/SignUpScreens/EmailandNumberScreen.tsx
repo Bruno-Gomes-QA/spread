@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Modalize } from 'react-native-modalize'
+import { Modalize } from 'react-native-modalize';
+import LottieView from 'lottie-react-native';
 import { setNewUserData, UserExist } from '../../services/firestoreService';
 import { ValidarEmail, FormatarNumber } from '../../components/Checks';
 import SpreadLogo from "../../../assets/spreadname.svg";
 import Button from '../../components/Button';
+import ButtonWhite from '../../components/ButtonWhite';
 import InputButton from '../../components/InputButton';
 import {
     Container,
@@ -14,6 +16,8 @@ import {
     SignMessageButton,
     SignMessageButtonText,
     SignMessageButtonTextBold,
+    ModalArea,
+    ModalTitle,
 } from './style';
 
 export function EmailandNumberScreen(){
@@ -48,13 +52,15 @@ export function EmailandNumberScreen(){
     async function handleButtonPressContinue(){
         const userExist = await UserExist(email, phoneNumber, 1)
         if (userExist) {
-            //Alert.alert('Usuário já cadastrado', 'Realize o login ou tente novamente')
             modalizeRef.current?.open()
         } else {
             setIsLoading(true);
-            setNewUserData(email, phoneNumber)
-                .then((doc) => navigation.navigate('CpfFullName', {email: email}))
-                .catch((error) => Alert.alert('Erro desconhecido', 'Tente novamente mais tarde'));
+                navigation.navigate('CpfFullName', {
+                    params: {
+                        email: email,
+                        phoneNumber: phoneNumber,
+                    }
+                })
             setIsLoading(false);
         }
     }
@@ -99,9 +105,32 @@ export function EmailandNumberScreen(){
                 </SignMessageButton>
                 <Modalize
                     ref={modalizeRef}
-                    snapPoint={180}
+                    withHandle={false}
+                    adjustToContentHeight={true}
                 >
-
+                    <ModalArea>
+                        <ModalTitle>
+                            Usuário já cadastrado
+                        </ModalTitle>
+                            <LottieView
+                                source={require('../../../assets/user_found.json')}
+                                autoPlay={true}
+                                loop={false}
+                                style={{height: 160, width: 160}}
+                            />
+                        <ButtonWhite
+                            title={"Entrar"}
+                            onPressIn={() => navigation.navigate('SignIn')}
+                            isLoading={false}
+                            disabled={false}
+                        ></ButtonWhite>
+                        <Button 
+                            isLoading={loading} 
+                            title='Tentar novamente'
+                            onPressIn={() => modalizeRef.current?.close()}
+                            disabled={false}
+                        />
+                    </ModalArea>
                 </Modalize>
             </Container>
     );

@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Alert } from 'react-native';
-import SpreadLogo from "../../../assets/spreadname.svg"
+import { Modalize } from 'react-native-modalize';
+import LottieView from 'lottie-react-native';
+import SpreadLogo from "../../../assets/spreadname.svg";
 import Button from '../../components/Button';
+import ButtonWhite from '../../components/ButtonWhite';
 import { setCpfFullName, UserExist } from '../../services/firestoreService'
 import { FormatarCPF, FormatarData, ValidarFullName, ValidarCPF, ValidarBirthDay } from '../../components/Checks';
 import InputButton from '../../components/InputButton';
@@ -10,9 +13,11 @@ import {
     Container,
     InputArea,
     LogoArea,
+    ModalArea,
+    ModalTitle
 } from './style';
 
-export function CpfFullNameScreen(email){
+export function CpfFullNameScreen(params){
     
     const navigation = useNavigation();
     const [loading, setIsLoading] = useState(false);
@@ -23,8 +28,9 @@ export function CpfFullNameScreen(email){
     const [birthDay, setBirthDay] = useState('');
     const [birthDayValidate, setBirthDayValidate] = useState(1);
     const [disabledButton, setDisabledButton] = useState(false);
-    const userEmail = email['route']['params']['email'];
-
+    const email = params['route']['params']['params']['email'];
+    const phoneNumber = params['route']['params']['params']['phoneNumber'];
+    const modalizeRef = useRef<Modalize>(null);
 
     useEffect(() => {
         setCPF(FormatarCPF(cpf))
@@ -45,11 +51,17 @@ export function CpfFullNameScreen(email){
     async function handleButtonPressContinue(){
         const userExist = await UserExist('nenhum', 'nenhum', cpf)
         if (userExist) {
-            Alert.alert('CPF já cadastrado', 'Informe outro CPF ou realize login')
+            modalizeRef.current?.open()
         } else {       
-            setCpfFullName(userEmail, cpf, fullName, birthDay)
-                .then((doc) => navigation.navigate('Andress', {email: userEmail}))
-                .catch((error) => Alert.alert('Erro desconhecido', 'Tente novamente mais tarde'));
+            navigation.navigate('Andress', {
+                params: {
+                    email: email,
+                    phoneNumber: phoneNumber,
+                    cpf: cpf,
+                    fullName: fullName,
+                    birthDay: birthDay,
+                }
+            })
         }
     }
 
@@ -99,6 +111,35 @@ export function CpfFullNameScreen(email){
                         disabled={disabledButton}
                     />
                 </InputArea>
+                <Modalize
+                    ref={modalizeRef}
+                    withHandle={false}
+                    adjustToContentHeight={true}
+                >
+                    <ModalArea>
+                        <ModalTitle>
+                            CPF já cadastrado
+                        </ModalTitle>
+                            <LottieView
+                                source={require('../../../assets/user_found.json')}
+                                autoPlay={true}
+                                loop={false}
+                                style={{height: 160, width: 160}}
+                            />
+                        <ButtonWhite
+                            title={"Entrar"}
+                            onPressIn={() => navigation.navigate('SignIn')}
+                            isLoading={false}
+                            disabled={false}
+                        ></ButtonWhite>
+                        <Button 
+                            isLoading={loading} 
+                            title='Tentar novamente'
+                            onPressIn={() => modalizeRef.current?.close()}
+                            disabled={false}
+                        />
+                    </ModalArea>
+                </Modalize>
             </Container>
     );
 }

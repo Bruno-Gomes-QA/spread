@@ -5,14 +5,24 @@ export const Container = styled.SafeAreaView`
     flex: 1;
     justify-content: center;
     align-items: center;
-`
+`;
 
 export const InputArea = styled.View`
     padding: 10px;
     width: 100%;
     justify-content: center;
     align-items: center;
-`
+`;
+
+export const ModalArea = styled.View`
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+`;
+
 export const CepArea = styled.View`
     padding: 10px;
     width: 90%;
@@ -21,7 +31,8 @@ export const CepArea = styled.View`
     border-width: 1px;
     border-color: #E4E4E4;
     margin-bottom: 10px;
-`
+`;
+
 export const CepText =styled.Text`
     font-size: 16px;
     color: #000;
@@ -35,20 +46,21 @@ export const TermsConditionsArea = styled.View`
     border-radius: 10px;
     width: 90%;
     justify-content: center;
-`
+`;
+
 export const HeaderArea = styled.View`
-    padding: 10px
-    width: 100%
+    padding: 10px;
+    width: 100%;
     justify-content: center;
     align-items: center;
-`
+`;
 
 export const LogoArea = styled.View`
     padding: 10px;
     width: 100%;
     justify-content: center;
     align-items: center;
-`
+`;
 
 export const SignMessageButton = styled.TouchableOpacity`
     flex-direction: row;
@@ -56,10 +68,12 @@ export const SignMessageButton = styled.TouchableOpacity`
     margin-top: 50px;
     margin-bottom: 20px;
 `;
+
 export const SignMessageButtonText =styled.Text`
     font-size: 12px;
     color: #000;
 `;
+
 export const PassowordInfo =styled.Text`
     width: 90%;
     font-size: 9px;
@@ -67,6 +81,7 @@ export const PassowordInfo =styled.Text`
     text-align: center;
     padding-bottom: 10px;
 `;
+
 export const SignMessageButtonTextBold =styled.Text`
     font-size: 12px;
     color: #000;
@@ -79,4 +94,11 @@ export const TermsConditionsTitle =styled.Text`
     color: #000;
     font-weight: bold;
     margin-bottom: 10px;
+`;
+
+export const ModalTitle =styled.Text`
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
+    margin-top: 15px;
 `;

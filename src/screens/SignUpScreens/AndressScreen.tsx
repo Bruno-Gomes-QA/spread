@@ -14,7 +14,7 @@ import {
     SignMessageButtonTextBold,
 } from './style';
 
-export function AndressScreen(email){
+export function AndressScreen(params){
     
     const navigation = useNavigation();
     const [cep, setCep] = useState('');
@@ -26,8 +26,12 @@ export function AndressScreen(email){
     const [houseNumber, setHouseNumber] = useState('');
     const [complement, setComplement] = useState('');
     const [disabledButton, setDisabledButton] = useState(false);
-    const[error, setError] = useState(true)
-    const userEmail = email['route']['params']['email'];
+    const [error, setError] = useState(true)
+    const email = params['route']['params']['params']['email'];
+    const phoneNumber = params['route']['params']['params']['phoneNumber'];
+    const cpf = params['route']['params']['params']['cpf'];
+    const fullName = params['route']['params']['params']['fullName'];
+    const birthDay = params['route']['params']['params']['birthDay'];
 
     useEffect(() => {
         
@@ -71,9 +75,22 @@ export function AndressScreen(email){
     }, [cep, houseNumber, error, cepValidate])
 
     function handleButtonPressContinue(){
-        setCepData(userEmail, cep, street, district, city, state, houseNumber, complement)
-            .then((doc) => navigation.navigate('Password', {email: userEmail}))
-            .catch((error) => Alert.alert('Erro desconhecido', 'Tente novamente mais tarde'));
+        navigation.navigate('Password', {
+            params: {
+                email: email,
+                phoneNumber: phoneNumber,
+                cpf: cpf,
+                fullName: fullName,
+                birthDay: birthDay,
+                cep: cep,
+                state: state,
+                city: city,
+                district: district,
+                street: street,
+                houseNumber: houseNumber,
+                
+            }
+        })
     }
 
     return(

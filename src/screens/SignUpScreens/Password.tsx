@@ -15,7 +15,7 @@ import {
     SignMessageButtonTextBold,
 } from './style';
 
-export function PasswordScreen(email){
+export function PasswordScreen(params){
     
     const {signUp} = useAuth();
     const navigation = useNavigation();
@@ -27,7 +27,17 @@ export function PasswordScreen(email){
     const [infoPassword, setInfoPassword] = useState(false);
     const [infoConfirmPassword, setInfoConfirmPassword] = useState(false);
     const [disabledButton, setDisabledButton] = useState(false);
-    const userEmail = email['route']['params']['email'];
+    const email = params['route']['params']['params']['email'];
+    const phoneNumber = params['route']['params']['params']['phoneNumber'];
+    const cpf = params['route']['params']['params']['cpf'];
+    const fullName = params['route']['params']['params']['fullName'];
+    const birthDay = params['route']['params']['params']['birthDay'];
+    const cep = params['route']['params']['params']['cep'];
+    const state = params['route']['params']['params']['state'];
+    const city = params['route']['params']['params']['city'];
+    const district = params['route']['params']['params']['district'];
+    const street = params['route']['params']['params']['street'];
+    const houseNumber = params['route']['params']['params']['houseNumber'];
 
     useEffect(() => {
 
@@ -55,7 +65,7 @@ export function PasswordScreen(email){
 
     function handleButtonPressSignUp(){
         setIsLoading(true);
-        signUp(userEmail, password);
+        signUp(email, password);
         setIsLoading(false);
 
     }
