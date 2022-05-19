@@ -1,11 +1,13 @@
 import firebase from '../config/firebaseconfig';
-import { doc, setDoc, getDoc, updateDoc, collection } from 'firebase/firestore/lite';
+import { doc, setDoc, getDoc, getDocs, updateDoc, collection, query, where } from 'firebase/firestore/lite';
+import { useState } from 'react';
 
 const db = firebase.db
 
 export async function setNewUserData (email, phoneNumber) {
 
     const userData = {
+        email: email,
         phone_number: phoneNumber,
         cpf: '',
         full_name: '',
@@ -99,6 +101,31 @@ export async function getUserInfo (user) {
 
     const docRef = doc(db, "User", user.email);
     const docSnap = await getDoc(docRef);
+    if (docSnap.exists) {
+        return docSnap.data()
+    } else {
+        return false
+    }
 
-    return docSnap.data()
+}
+
+export async function UserExist (email, phoneNumber, cpf) {
+
+    let emailornumberorcpfExist = false
+
+    const collectionRef = collection(db, "User")
+    const emailQuery = query(collectionRef, where("email", "==", email));
+    const numberQuery = query(collectionRef, where("phone_number", "==", phoneNumber));
+    const cpfQuery = query(collectionRef, where("cpf", "==", cpf));
+
+    const emailResult = await getDocs(emailQuery);
+    if(emailResult.size > 0) {emailornumberorcpfExist = true};
+
+    const numberResult = await getDocs(numberQuery);
+    if(numberResult.size > 0) {emailornumberorcpfExist = true};
+
+    const cpfResult = await getDocs(cpfQuery);
+    if(cpfResult.size > 0) {emailornumberorcpfExist = true};
+
+    return emailornumberorcpfExist
 }

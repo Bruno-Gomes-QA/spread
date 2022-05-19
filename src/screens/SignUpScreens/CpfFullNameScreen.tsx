@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import Alert from 'react-native';
+import { Alert } from 'react-native';
 import SpreadLogo from "../../../assets/spreadname.svg"
 import Button from '../../components/Button';
-import { setCpfFullName } from '../../services/firestoreService'
+import { setCpfFullName, UserExist } from '../../services/firestoreService'
 import { FormatarCPF, FormatarData, ValidarFullName, ValidarCPF, ValidarBirthDay } from '../../components/Checks';
 import InputButton from '../../components/InputButton';
 import {
@@ -40,12 +40,17 @@ export function CpfFullNameScreen(email){
         } else {
             setDisabledButton(true)
         }
-    }, [cpf, fullName, birthDay])
+    }, [cpf, cpfValidate, fullName, fullNameValidate, birthDay, birthDayValidate])
 
-    function handleButtonPressContinue(){
-        setCpfFullName(userEmail, cpf, fullName, birthDay)
-            .then((doc) => navigation.navigate('Andress', {email: userEmail}))
-            .catch((error) => Alert.alert('Erro desconhecido', 'Tente novamente mais tarde'));
+    async function handleButtonPressContinue(){
+        const userExist = await UserExist('nenhum', 'nenhum', cpf)
+        if (userExist) {
+            Alert.alert('CPF já cadastrado', 'Informe outro CPF ou realize login')
+        } else {       
+            setCpfFullName(userEmail, cpf, fullName, birthDay)
+                .then((doc) => navigation.navigate('Andress', {email: userEmail}))
+                .catch((error) => Alert.alert('Erro desconhecido', 'Tente novamente mais tarde'));
+        }
     }
 
     return(

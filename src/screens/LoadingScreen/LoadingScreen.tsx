@@ -1,7 +1,26 @@
-import { Container, View } from './style';
+import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { Container, View } from './style'
+import { useAuth } from "../../contexts/Auth";
 import LottieView from 'lottie-react-native';
 
 export function LoadingScreen(){
+    const {authData} = useAuth();
+    const navigation = useNavigation();
+
+    useEffect(() => {
+        setTimeout(() => {
+            {authData ?
+                navigation.reset({
+                    routes:[{name:'Home'}]
+                })
+            : 
+                navigation.reset({
+                    routes:[{name:'WelcomeScreen'}]
+                })
+            }
+        }, 3000);
+    }, []);
 
     return (
         <Container>

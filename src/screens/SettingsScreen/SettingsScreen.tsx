@@ -13,7 +13,6 @@ export function SettingsScreen(){
 
     function handleButtonPressSignOut(){
         setIsLoading(true);
-        console.log('Pressionando');
         setTimeout(() => {
             setIsLoading(false);
         }, 2000);
@@ -22,7 +21,6 @@ export function SettingsScreen(){
 
     function handleButtonPressBack(){
         setIsLoading(true);
-        console.log('Pressionando');
         setTimeout(() => {
             setIsLoading(false);
         }, 2000);

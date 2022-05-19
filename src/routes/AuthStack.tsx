@@ -8,7 +8,6 @@ import { EmailandNumberScreen } from '../screens/SignUpScreens/EmailandNumberScr
 import { CpfFullNameScreen } from '../screens/SignUpScreens/CpfFullNameScreen';
 import { AndressScreen } from '../screens/SignUpScreens/AndressScreen';
 import { PasswordScreen } from '../screens/SignUpScreens/Password';
-import { SignInitScreen } from '../screens/SignInitScreen/SignInitScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,7 +26,6 @@ export function AuthStack(){
             <Stack.Screen name="CpfFullName" component={CpfFullNameScreen}/>
             <Stack.Screen name="Andress" component={AndressScreen}/>
             <Stack.Screen name="Password" component={PasswordScreen}/>
-            <Stack.Screen name="SignInit" component={SignInitScreen}/>
         </Stack.Navigator>
     )
 }

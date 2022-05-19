@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import ConfigButton from '../../components/ButtonHomeHeader';
 import SpreadLogo from "../../../assets/spreadnamewhite.svg";
-import { StatusBar } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 import { TabBarOptions } from '../../components/TabBarOptions';
 import { useAuth } from '../../contexts/Auth';
 import { getUserInfo } from '../../services/firestoreService';
@@ -17,16 +17,28 @@ import {
 
 export function HomeScreen(){
 
-    const [balance, setBalance] = useState(0)
+    const [balance, setBalance] = useState(0);
+    const [retry, setRetry] = useState(0);
     const { checkCurrentUser } = useAuth();
     const navigation = useNavigation();
-
+    
     useEffect(() => {
-        const user = checkCurrentUser()
-        getUserInfo(user).then((userInfo) => {
+        userData()
+    },[retry])   
+
+    async function userData() {
+        const user = await checkCurrentUser()
+        const userInfo = await getUserInfo(user)
+        if (userInfo) {
             setBalance(userInfo['balance'])
-        })
-    },[])   
+        } else {
+            if (retry < 5){
+                setRetry(+1)    
+            } else {
+                Alert.alert('Spread não está respondendo', 'Tente novamente mais tarde')
+            }
+        }
+    }
 
     function handleButtonPressSettings(){
         navigation.navigate('Settings')

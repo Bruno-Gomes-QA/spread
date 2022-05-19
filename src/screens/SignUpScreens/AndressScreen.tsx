@@ -45,7 +45,6 @@ export function AndressScreen(email){
                         setDistrict(json['bairro'])
                         setCity(json['localidade'])
                         setState(json['uf'])
-                        console.log(json)
                     }
                 })
         }
@@ -72,7 +71,6 @@ export function AndressScreen(email){
     }, [cep, houseNumber, error, cepValidate])
 
     function handleButtonPressContinue(){
-        console.log(email)
         setCepData(userEmail, cep, street, district, city, state, houseNumber, complement)
             .then((doc) => navigation.navigate('Password', {email: userEmail}))
             .catch((error) => Alert.alert('Erro desconhecido', 'Tente novamente mais tarde'));

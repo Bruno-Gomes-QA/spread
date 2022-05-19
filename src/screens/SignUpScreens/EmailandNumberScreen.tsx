@@ -5,7 +5,7 @@ import SpreadLogo from "../../../assets/spreadname.svg";
 import Button from '../../components/Button';
 import InputButton from '../../components/InputButton';
 import { ValidarEmail, FormatarNumber } from '../../components/Checks';
-import { setNewUserData } from '../../services/firestoreService'
+import { setNewUserData, UserExist } from '../../services/firestoreService';
 import {
     Container,
     InputArea,
@@ -29,6 +29,7 @@ export function EmailandNumberScreen(){
 
         setPhoneNumber(FormatarNumber(phoneNumber))
         setEmailValidate(ValidarEmail(email))
+        setEmail(email.toLowerCase())
 
         if (phoneNumber.length === 15) {
             setNumberValidate(3)
@@ -42,13 +43,17 @@ export function EmailandNumberScreen(){
 
     }, [email, phoneNumber, numberValidate, emailValidate])
 
-    function handleButtonPressContinue(){
-        setIsLoading(true);
-        setNewUserData(email, phoneNumber)
-            .then((doc) => navigation.navigate('CpfFullName', {email: email}))
-            .catch((error) => Alert.alert('Erro desconhecido', 'Tente novamente mais tarde'));
-        setIsLoading(false);
-
+    async function handleButtonPressContinue(){
+        const userExist = await UserExist(email, phoneNumber, 1)
+        if (userExist) {
+            Alert.alert('Usuário já cadastrado', 'Realize o login ou tente novamente')
+        } else {
+            setIsLoading(true);
+            setNewUserData(email, phoneNumber)
+                .then((doc) => navigation.navigate('CpfFullName', {email: email}))
+                .catch((error) => Alert.alert('Erro desconhecido', 'Tente novamente mais tarde'));
+            setIsLoading(false);
+        }
     }
 
     return(
