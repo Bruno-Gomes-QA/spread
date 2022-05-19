@@ -39,6 +39,7 @@
     "react-native": "^0.64.3",
     "react-native-crypto": "^2.2.0",
     "react-native-datepicker": "^1.7.2",
+    "react-native-modalize": "^2.0.13",
     "react-native-randombytes": "^3.6.1",
     "react-native-reanimated": "~2.3.1",
     "react-native-safe-area-context": "3.3.2",

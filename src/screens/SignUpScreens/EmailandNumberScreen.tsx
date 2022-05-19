@@ -1,11 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
+import { useState, useEffect, useRef } from 'react';
 import { Alert } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { Modalize } from 'react-native-modalize'
+import { setNewUserData, UserExist } from '../../services/firestoreService';
+import { ValidarEmail, FormatarNumber } from '../../components/Checks';
 import SpreadLogo from "../../../assets/spreadname.svg";
 import Button from '../../components/Button';
 import InputButton from '../../components/InputButton';
-import { ValidarEmail, FormatarNumber } from '../../components/Checks';
-import { setNewUserData, UserExist } from '../../services/firestoreService';
 import {
     Container,
     InputArea,
@@ -24,6 +25,7 @@ export function EmailandNumberScreen(){
     const [phoneNumber, setPhoneNumber] = useState('');
     const [numberValidate, setNumberValidate] = useState(1);
     const [disabledButton, setDisabledButton] = useState(true);
+    const modalizeRef = useRef<Modalize>(null);
 
     useEffect(() => {
 
@@ -46,7 +48,8 @@ export function EmailandNumberScreen(){
     async function handleButtonPressContinue(){
         const userExist = await UserExist(email, phoneNumber, 1)
         if (userExist) {
-            Alert.alert('Usuário já cadastrado', 'Realize o login ou tente novamente')
+            //Alert.alert('Usuário já cadastrado', 'Realize o login ou tente novamente')
+            modalizeRef.current?.open()
         } else {
             setIsLoading(true);
             setNewUserData(email, phoneNumber)
@@ -94,6 +97,12 @@ export function EmailandNumberScreen(){
                     <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
                     <SignMessageButtonTextBold>Entrar</SignMessageButtonTextBold>
                 </SignMessageButton>
+                <Modalize
+                    ref={modalizeRef}
+                    snapPoint={180}
+                >
+
+                </Modalize>
             </Container>
     );
 }
