@@ -3,6 +3,7 @@ node_modules/
 dist/
 src/config
 package-lock.json
+yarn.lock
 npm-debug.*
 *.jks
 *.p8
