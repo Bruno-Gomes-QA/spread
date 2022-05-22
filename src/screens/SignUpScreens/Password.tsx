@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import SpreadLogo from "../../../assets/spreadname.svg"
 import Button from '../../components/Button';
 import InputButton from '../../components/InputButton';
@@ -14,6 +14,7 @@ import {
     SignMessageButtonText,
     SignMessageButtonTextBold,
 } from './style';
+import { setNewUserData } from '../../services/firestoreService';
 
 export function PasswordScreen(params){
     
@@ -38,7 +39,7 @@ export function PasswordScreen(params){
     const district = params['route']['params']['params']['district'];
     const street = params['route']['params']['params']['street'];
     const houseNumber = params['route']['params']['params']['houseNumber'];
-
+    
     useEffect(() => {
 
         setPasswordValidate(ValidarPassword(password))
@@ -65,6 +66,7 @@ export function PasswordScreen(params){
 
     function handleButtonPressSignUp(){
         setIsLoading(true);
+        setNewUserData(email, phoneNumber, cpf, fullName, birthDay, cep, state, city, district, street, houseNumber)
         signUp(email, password);
         setIsLoading(false);
 

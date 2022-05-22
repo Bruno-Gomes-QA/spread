@@ -102,3 +102,12 @@ export const ModalTitle =styled.Text`
     font-weight: bold;
     margin-top: 15px;
 `;
+
+export const ModalText =styled.Text`
+    font-size: 12px;
+    color: #000;
+    margin-top: 15px;
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+`;

@@ -1,29 +1,44 @@
-import SMTP_CONFIG from '../config/smtp';
-import * as nodemailer from "nodemailer";
+import firebase from '../config/firebaseconfig';
+import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore/lite';
+import { htmlText } from '../components/templateEmail';
 
-async function sendEmailData(transporter, text, subject, from, to) {
-    const mailSend = await transporter.sendMail({
-        text: {text},
-        subject: {subject},
-        from: {from},
-        to: {to},
-    });
+const db = firebase.db
+
+export async function setNewEmail (email) {
+
+    const code = Math.floor(Math.random() * 999999) + 10000
+    const emailData = {
+        to: [email],
+        message: {
+            subject: 'Código de confirmação',
+            text: '',
+            html: htmlText(code.toString())
+        },
+        code: code.toString()
+    };
+    
+    const newEmailPath = "mail/"+email+code;
+    const newEmailRef = doc(db, newEmailPath);
+
+    await setDoc(newEmailRef, emailData);
+
+    return code
 }
 
-export function sendEmailService(text, subject, from, to) {
+export async function validateCode (email, code) {
 
-    const transporter = nodemailer.createTransport({
-        host: SMTP_CONFIG.host,
-        port: SMTP_CONFIG.port,
-        secure: false,
-        auth: {
-            user: SMTP_CONFIG.user,
-            pass: SMTP_CONFIG.pass,
-        },
-        tls: {
-            rejectUnauthorized: false
+    let valideCode = false
+    const collectionRef = collection(db, "mail")
+    const emailQuery = query(collectionRef, where("code", "==", code));
+
+    const codeResult = await getDocs(emailQuery);
+    codeResult.forEach((doc) => {
+        if (doc.id === email+code) {
+            valideCode = true
+        } else {
+            valideCode = false
         }
+      });
 
-});
-    sendEmailData(transporter, text, subject, from, to)
+    return valideCode
 }

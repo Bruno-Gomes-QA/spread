@@ -4,22 +4,21 @@ import { useState } from 'react';
 
 const db = firebase.db
 
-export async function setNewUserData (email, phoneNumber) {
+export async function setNewUserData (email, phoneNumber, cpf, fullName, birthDay, cep, state, city, district, street, houseNumber) {
 
     const userData = {
         email: email,
         phone_number: phoneNumber,
-        cpf: '',
-        full_name: '',
-        birth_day: '',
+        cpf: cpf,
+        full_name: fullName,
+        birth_day: birthDay,
         country: 'Brasil',
-        cep: '',
-        state: '',
-        city: '',
-        district: '',
-        street: '',
-        house_number: '',
-        complement: '',
+        cep: cep,
+        state: state,
+        city: city,
+        district: district,
+        street: street,
+        house_number: houseNumber,
         balance: 0,
         spreading: 0,
         terms: true,

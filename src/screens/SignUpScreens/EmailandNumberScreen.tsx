@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Modalize } from 'react-native-modalize';
 import LottieView from 'lottie-react-native';
-import { setNewUserData, UserExist } from '../../services/firestoreService';
+import { UserExist } from '../../services/firestoreService';
+import { setNewEmail, validateCode } from '../../services/emailService';
 import { ValidarEmail, FormatarNumber } from '../../components/Checks';
 import SpreadLogo from "../../../assets/spreadname.svg";
 import Button from '../../components/Button';
@@ -18,6 +18,7 @@ import {
     SignMessageButtonTextBold,
     ModalArea,
     ModalTitle,
+    ModalText,
 } from './style';
 
 export function EmailandNumberScreen(){
@@ -28,7 +29,10 @@ export function EmailandNumberScreen(){
     const [emailValidate, setEmailValidate] = useState(1);
     const [phoneNumber, setPhoneNumber] = useState('');
     const [numberValidate, setNumberValidate] = useState(1);
+    const [confirmationCode, setConfirmationCode] = useState('')
     const [disabledButton, setDisabledButton] = useState(true);
+    const [disabledSecondButton, setDisabledSecondButton] = useState(true);
+    const [userExist, setUserExist] = useState(false);
     const modalizeRef = useRef<Modalize>(null);
 
     useEffect(() => {
@@ -49,75 +53,85 @@ export function EmailandNumberScreen(){
 
     }, [email, phoneNumber, numberValidate, emailValidate])
 
+    useEffect(() => {
+        handleButtonPressContinueCode()
+    }, [confirmationCode])
+
+    async function handleButtonPressContinueCode() {
+        if (confirmationCode.length > 4) {
+            const valideCode = await validateCode(email, confirmationCode)
+            {valideCode ? setDisabledSecondButton(false) : setDisabledSecondButton(true)}
+        } else {
+            setDisabledSecondButton(true)
+        }
+    }
+
     async function handleButtonPressContinue(){
-        const userExist = await UserExist(email, phoneNumber, 1)
+        setUserExist(await UserExist(email, phoneNumber, 1))
         if (userExist) {
             modalizeRef.current?.open()
         } else {
+            setNewEmail(email)
+            modalizeRef.current?.open()
             setIsLoading(true);
-                navigation.navigate('CpfFullName', {
-                    params: {
-                        email: email,
-                        phoneNumber: phoneNumber,
-                    }
-                })
             setIsLoading(false);
         }
     }
 
     return(
-            <Container>
-                <HeaderArea></HeaderArea>
-                <SpreadLogo width="100%" height={120} ></SpreadLogo>
-                <InputArea>
-                    <InputButton
-                        Icon='mail'
-                        placeholder='Digite seu melhor e-mail'
-                        value={email} 
-                        onChangeText={setEmail}
-                        password={false}
-                        maxLength={100}
-                        keyboardType={"email-address"}
-                        validate={emailValidate}
-                        autoCapitalize={'none'}
-                    />
-                    <InputButton
-                        Icon='phone'
-                        placeholder='Digite seu número'
-                        value={phoneNumber} 
-                        onChangeText={setPhoneNumber}
-                        password={false}
-                        maxLength={15}
-                        keyboardType={"phone-pad"}
-                        validate={numberValidate}
-                        autoCapitalize={'none'}
-                    />
-                    <Button 
-                        isLoading={loading} 
-                        title='Continuar' 
-                        onPressIn={handleButtonPressContinue}
-                        disabled={disabledButton}
-                    />
-                </InputArea>
-                <SignMessageButton onPressIn={() => navigation.navigate('SignIn')}>
-                    <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
-                    <SignMessageButtonTextBold>Entrar</SignMessageButtonTextBold>
-                </SignMessageButton>
-                <Modalize
-                    ref={modalizeRef}
-                    withHandle={false}
-                    adjustToContentHeight={true}
-                >
+        <Container>
+            <HeaderArea></HeaderArea>
+            <SpreadLogo width="100%" height={120} ></SpreadLogo>
+            <InputArea>
+                <InputButton
+                    Icon='mail'
+                    placeholder='Digite seu melhor e-mail'
+                    value={email} 
+                    onChangeText={setEmail}
+                    password={false}
+                    maxLength={100}
+                    keyboardType={"email-address"}
+                    validate={emailValidate}
+                    autoCapitalize={'none'}
+                />
+                <InputButton
+                    Icon='phone'
+                    placeholder='Digite seu número'
+                    value={phoneNumber} 
+                    onChangeText={setPhoneNumber}
+                    password={false}
+                    maxLength={15}
+                    keyboardType={"phone-pad"}
+                    validate={numberValidate}
+                    autoCapitalize={'none'}
+                />
+                <Button 
+                    isLoading={loading} 
+                    title='Continuar' 
+                    onPressIn={handleButtonPressContinue}
+                    disabled={disabledButton}
+                />
+            </InputArea>
+            <SignMessageButton onPressIn={() => navigation.navigate('SignIn')}>
+                <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
+                <SignMessageButtonTextBold>Entrar</SignMessageButtonTextBold>
+            </SignMessageButton>
+            <Modalize
+                ref={modalizeRef}
+                withHandle={false}
+                adjustToContentHeight={true}
+            >
+                {userExist ? 
                     <ModalArea>
                         <ModalTitle>
                             Usuário já cadastrado
-                        </ModalTitle>
-                            <LottieView
-                                source={require('../../../assets/user_found.json')}
-                                autoPlay={true}
-                                loop={false}
-                                style={{height: 160, width: 160}}
-                            />
+                        </ModalTitle> 
+                        <LottieView
+                            source={require('../../../assets/user_found.json')}
+                            autoPlay={true}
+                            loop={false}
+                            style={{height: 160, width: 160}}
+                        />
                         <ButtonWhite
                             title={"Entrar"}
                             onPressIn={() => navigation.navigate('SignIn')}
@@ -125,13 +139,40 @@ export function EmailandNumberScreen(){
                             disabled={false}
                         ></ButtonWhite>
                         <Button 
-                            isLoading={loading} 
+                            isLoading={false} 
                             title='Tentar novamente'
                             onPressIn={() => modalizeRef.current?.close()}
                             disabled={false}
                         />
                     </ModalArea>
-                </Modalize>
-            </Container>
+                :
+                    <ModalArea>
+                        <ModalTitle>
+                            Confirme seu E-mail
+                        </ModalTitle>
+                        <ModalText>
+                            Enviamos um código de confirmação para seu e-mail, preencha o campo abaixo com este código para continuar seu cadastro.
+                        </ModalText>
+                        <InputButton
+                            Icon='key'
+                            placeholder='Informe o código'
+                            value={confirmationCode} 
+                            onChangeText={setConfirmationCode}
+                            password={false}
+                            maxLength={6}
+                            keyboardType={"phone-pad"}
+                            validate={1}
+                            autoCapitalize={'none'}
+                        />
+                        <Button 
+                            isLoading={false} 
+                            title='Confirmar'
+                            onPressIn={() => navigation.navigate('CpfFullName', {params: {email: email, phoneNumber: phoneNumber}})}
+                            disabled={disabledSecondButton}
+                        />    
+                    </ModalArea>
+                }
+            </Modalize>
+        </Container>
     );
 }

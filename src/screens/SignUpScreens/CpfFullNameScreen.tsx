@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Alert } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import LottieView from 'lottie-react-native';
 import SpreadLogo from "../../../assets/spreadname.svg";
 import Button from '../../components/Button';
 import ButtonWhite from '../../components/ButtonWhite';
-import { setCpfFullName, UserExist } from '../../services/firestoreService'
+import { UserExist } from '../../services/firestoreService'
 import { FormatarCPF, FormatarData, ValidarFullName, ValidarCPF, ValidarBirthDay } from '../../components/Checks';
 import InputButton from '../../components/InputButton';
 import {
@@ -14,7 +13,7 @@ import {
     InputArea,
     LogoArea,
     ModalArea,
-    ModalTitle
+    ModalTitle,
 } from './style';
 
 export function CpfFullNameScreen(params){

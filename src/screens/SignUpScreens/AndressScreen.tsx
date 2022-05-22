@@ -1,14 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
-import { useState, useEffect } from 'react';
-import SpreadLogo from "../../../assets/spreadname.svg"
+import { useState, useEffect, useRef } from 'react';
+import SpreadLogo from "../../../assets/spreadname.svg";
 import Button from '../../components/Button';
+import ButtonWhite from '../../components/ButtonWhite';
 import InputButton from '../../components/InputButton';
+import LottieView from 'lottie-react-native';
 import { FormatarCep } from '../../components/Checks';
-import { setCepData } from '../../services/firestoreService';
+import { Modalize } from 'react-native-modalize';
 import {
     Container,
     InputArea,
     HeaderArea,
+    ModalArea,
+    ModalTitle,
+    ModalText,
     SignMessageButton,
     SignMessageButtonText,
     SignMessageButtonTextBold,
@@ -32,6 +37,7 @@ export function AndressScreen(params){
     const cpf = params['route']['params']['params']['cpf'];
     const fullName = params['route']['params']['params']['fullName'];
     const birthDay = params['route']['params']['params']['birthDay'];
+    const modalizeRef = useRef<Modalize>(null);
 
     useEffect(() => {
         
@@ -61,6 +67,7 @@ export function AndressScreen(params){
             setCepValidate(2)
         } else if (!error) {
             setCepValidate(3)
+            modalizeRef.current?.open()
         }
 
         const allFilledCorrect = cepValidate === 3 && houseNumber.length > 0
@@ -109,50 +116,43 @@ export function AndressScreen(params){
                     validate={cepValidate}
                     autoCapitalize={'none'}
                 />
-                <InputButton
-                    Icon=''
-                    placeholder='Informe seu Endereço'
-                    value={street} 
-                    onChangeText={setStreet}
-                    password={false}
-                    maxLength={100}
-                    keyboardType={"default"}
-                    validate={1}
-                    autoCapitalize={'none'}
-                />
-                <InputButton
-                    Icon=''
-                    placeholder='Informe seu Número'
-                    value={houseNumber} 
-                    onChangeText={setHouseNumber}
-                    password={false}
-                    maxLength={6}
-                    keyboardType={"numeric"}
-                    validate={1}
-                    autoCapitalize={'none'}
-                />
-                <InputButton
-                    Icon=''
-                    placeholder='Complemento (Opcional)'
-                    value={complement} 
-                    onChangeText={setComplement}
-                    password={false}
-                    maxLength={20}
-                    keyboardType={"default"}
-                    validate={1}
-                    autoCapitalize={'none'}
-                />
-                <Button 
-                    isLoading={false} 
-                    title='Continue' 
-                    onPressIn={handleButtonPressContinue}
-                    disabled={disabledButton}
-                />
             </InputArea>
             <SignMessageButton onPressIn={() => navigation.navigate('SignIn')}>
                 <SignMessageButtonText>Já possui uma conta?</SignMessageButtonText>
                 <SignMessageButtonTextBold>Entrar</SignMessageButtonTextBold>
             </SignMessageButton>
+            <Modalize
+                    ref={modalizeRef}
+                    withHandle={false}
+                    adjustToContentHeight={true}
+                >
+                    <ModalArea>
+                        <ModalTitle>
+                            Este é seu endereço?
+                        </ModalTitle>
+                            <LottieView
+                                source={require('../../../assets/house.json')}
+                                autoPlay={true}
+                                loop={true}
+                                style={{height: 120, width: 120}}
+                            />
+                        <ModalText>
+                            {street + ', ' + district + ', ' + city + ', ' + state }
+                        </ModalText>
+                        <ButtonWhite
+                            title={"Confirmar endereço"}
+                            onPressIn={handleButtonPressContinue}
+                            isLoading={false}
+                            disabled={false}
+                        ></ButtonWhite>
+                        <Button 
+                            isLoading={false} 
+                            title='Tentar novamente'
+                            onPressIn={() => modalizeRef.current?.close()}
+                            disabled={false}
+                        />
+                    </ModalArea>
+                </Modalize>
         </Container>
     );
 }
