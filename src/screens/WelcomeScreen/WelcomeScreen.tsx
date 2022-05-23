@@ -67,7 +67,7 @@ export function WelcomeScreen(){
 
     function nextCard () {
         if (card === 5) {
-            navigation.navigate('EmailandNumber')
+            navigation.navigate('TermsAndConditions')
             setTimeout(() => {
                 setCard(0)
                 setLastCard(false)

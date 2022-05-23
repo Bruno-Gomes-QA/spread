@@ -30,6 +30,7 @@ export function EmailandNumberScreen(){
     const [phoneNumber, setPhoneNumber] = useState('');
     const [numberValidate, setNumberValidate] = useState(1);
     const [confirmationCode, setConfirmationCode] = useState('')
+    const [valideConfirmationCode, setValideConfirmationCode] = useState(1)
     const [disabledButton, setDisabledButton] = useState(true);
     const [disabledSecondButton, setDisabledSecondButton] = useState(true);
     const [userExist, setUserExist] = useState(false);
@@ -58,10 +59,14 @@ export function EmailandNumberScreen(){
     }, [confirmationCode])
 
     async function handleButtonPressContinueCode() {
-        if (confirmationCode.length > 4) {
+        if (confirmationCode.length > 5) {
             const valideCode = await validateCode(email, confirmationCode)
             {valideCode ? setDisabledSecondButton(false) : setDisabledSecondButton(true)}
+            {valideCode ? setValideConfirmationCode(3) : setValideConfirmationCode(2)}
+        } else if (confirmationCode === ''){
+            setValideConfirmationCode(1)
         } else {
+            setValideConfirmationCode(2)
             setDisabledSecondButton(true)
         }
     }
@@ -71,6 +76,7 @@ export function EmailandNumberScreen(){
         if (userExist) {
             modalizeRef.current?.open()
         } else {
+            setConfirmationCode('')
             setNewEmail(email)
             modalizeRef.current?.open()
             setIsLoading(true);
@@ -161,7 +167,7 @@ export function EmailandNumberScreen(){
                             password={false}
                             maxLength={6}
                             keyboardType={"phone-pad"}
-                            validate={1}
+                            validate={valideConfirmationCode}
                             autoCapitalize={'none'}
                         />
                         <Button 
