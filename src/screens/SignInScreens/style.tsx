@@ -29,12 +29,12 @@ export const InputText = styled.Text`
     font-size: 18px;
     color: #000;
     text-align: left
-    width: 80%
-    padding-bottom: 10px
+    width: 80%;
+    padding-bottom: 10px;
 `
 
 export const RecoverMeArea = styled.View`
-    width: 60%
+    width: 60%;
     justify-content: center;
     align-items: center;
 `
@@ -61,6 +61,14 @@ export const RecoverPassword =styled.Text`
     color: #FD8033;
     font-weight: bold;
     padding-top: 10px;
+`;
+
+export const PassowordInfo =styled.Text`
+    width: 90%;
+    font-size: 9px;
+    color: #FF0000;
+    text-align: center;
+    padding-bottom: 10px;
 `;
 
 

@@ -1,6 +1,7 @@
 import firebase from '../config/firebaseconfig';
 import { doc, setDoc, getDoc, getDocs, updateDoc, collection, query, where } from 'firebase/firestore/lite';
-import { useState } from 'react';
+import encrypt from '../config/encrypt';
+import * as Crypto from 'expo-crypto';
 
 const db = firebase.db
 

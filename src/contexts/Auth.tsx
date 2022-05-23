@@ -10,6 +10,7 @@ interface AuthContextData {
     authData?: AuthData;
     signIn: (email: string, password: string) => Promise<AuthData>;
     signUp: (email: string, password: string) => Promise<AuthData>;
+    changePassword: (email: string, password: string) => Promise<AuthData>;
     signOut: () => Promise<AuthData>;
     checkCurrentUser: () => Promise<AuthData>;
 }
@@ -80,6 +81,19 @@ export const AuthProvider: React.FC = ({children}) => {
         }
     }
 
+    async function changePassword(email, password)
+    {
+        try {
+            const user = await authService.changePassword(email, password);
+
+            setAuth(user);
+            
+            return user;
+        } catch (error) {
+            Alert.alert(error.message, 'Tente novamente');
+        }
+    }
+
     function checkCurrentUser()
     {
         try {
@@ -101,7 +115,7 @@ export const AuthProvider: React.FC = ({children}) => {
     }
 
     return (
-        <AuthContext.Provider value={{authData, signIn, signOut, signUp, checkCurrentUser}}>
+        <AuthContext.Provider value={{authData, signIn, signOut, signUp, changePassword, checkCurrentUser}}>
             {children}
         </AuthContext.Provider>
     )
