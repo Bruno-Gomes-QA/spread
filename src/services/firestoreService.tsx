@@ -62,40 +62,6 @@ export async function setNewWithdraw (email) {
     await setDoc(withdrawRegistrerRef, userData);
 }
 
-export async function setFirstLogin(user) {
-
-    const docRef = doc(db, "User", user.email);
-    await updateDoc(docRef, {
-        first_login: false
-      });
-
-}
-
-export async function setCpfFullName(userEmail, cpf, fullName, birthDay) {
-
-    const docRef = doc(db, 'User', userEmail);
-    return await updateDoc(docRef, {
-        cpf: cpf,
-        full_name: fullName,
-        birth_day: birthDay
-      });
-}
-
-export async function setCepData(userEmail, cep, street, district, city, state, houseNumber, complement) {
-
-    const docRef = doc(db, 'User', userEmail);
-    return await updateDoc(docRef, {
-        cep: cep,
-        state: state,
-        city: city,
-        district: district,
-        street: street,
-        house_number: houseNumber,
-        complement: complement,
-      });
-
-}
-
 export async function getUserInfo (user) {
 
     const docRef = doc(db, "User", user.email);

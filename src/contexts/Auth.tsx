@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { createContext, useState } from "react";
 import { Alert } from 'react-native';
 import { authService } from "../services/authService";
-import { setNewUserData } from '../services/firestoreService';
 
 interface AuthData {
     user;

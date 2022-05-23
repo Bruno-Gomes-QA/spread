@@ -37,7 +37,7 @@ export function EmailandNumberScreen(){
     const modalizeRef = useRef<Modalize>(null);
 
     useEffect(() => {
-
+        
         setPhoneNumber(FormatarNumber(phoneNumber))
         setEmailValidate(ValidarEmail(email))
         setEmail(email.toLowerCase())
@@ -56,6 +56,7 @@ export function EmailandNumberScreen(){
 
     useEffect(() => {
         handleButtonPressContinueCode()
+        console.log(confirmationCode)
     }, [confirmationCode])
 
     async function handleButtonPressContinueCode() {
@@ -65,6 +66,7 @@ export function EmailandNumberScreen(){
             {valideCode ? setValideConfirmationCode(3) : setValideConfirmationCode(2)}
         } else if (confirmationCode === ''){
             setValideConfirmationCode(1)
+            setDisabledSecondButton(true)
         } else {
             setValideConfirmationCode(2)
             setDisabledSecondButton(true)
@@ -156,6 +158,12 @@ export function EmailandNumberScreen(){
                         <ModalTitle>
                             Confirme seu E-mail
                         </ModalTitle>
+                        <LottieView
+                            source={require('../../../assets/email_sending.json')}
+                            autoPlay={true}
+                            loop={true}
+                            style={{height: 120, width: 120}}
+                        />
                         <ModalText>
                             Enviamos um código de confirmação para seu e-mail, preencha o campo abaixo com este código para continuar seu cadastro.
                         </ModalText>

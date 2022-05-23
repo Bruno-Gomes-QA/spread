@@ -108,6 +108,5 @@ export const ModalText =styled.Text`
     color: #000;
     margin-top: 15px;
     width: 90%;
-    padding: 10px;
     margin-bottom: 15px;
 `;

@@ -24,6 +24,7 @@ export function HomeScreen(){
     
     useEffect(() => {
         userData()
+        console.log(retry)
     },[retry])   
 
     async function userData() {
