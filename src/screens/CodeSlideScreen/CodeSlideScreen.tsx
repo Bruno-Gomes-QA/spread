@@ -1,20 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import ButtonWhite from "../../components/ButtonWhite";
 import ButtonIcon from "../../components/ButtonIcon";
 import LottieView from 'lottie-react-native';
-import SpreadLogo from "../../../assets/spreadname.svg";
 import {
     Container,
-    ButtonArea,
     ButtonViewArea, 
-    ContainerInit, 
     View, 
-    InitView, 
-    ButtonAreaClient, 
-    LogoArea, 
     ButtonView, 
-    ButtonsArea, 
     TitleText, 
     SubTitleText 
 } from './style';

@@ -35,8 +35,6 @@ export async function validateCode (email, code) {
     codeResult.forEach((doc) => {
         if (doc.id === email+code) {
             valideCode = true
-        } else {
-            valideCode = false
         }
       });
 

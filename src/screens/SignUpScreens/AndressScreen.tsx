@@ -22,21 +22,20 @@ import {
 export function AndressScreen(params){
     
     const navigation = useNavigation();
+    const [loading, setIsLoading] = useState(false);
     const [cep, setCep] = useState('');
     const [cepValidate, setCepValidate] = useState(1);
     const [street, setStreet] = useState('');
     const [district, setDistrict] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [houseNumber, setHouseNumber] = useState('');
-    const [complement, setComplement] = useState('');
-    const [disabledButton, setDisabledButton] = useState(false);
     const [error, setError] = useState(true)
     const email = params['route']['params']['params']['email'];
     const phoneNumber = params['route']['params']['params']['phoneNumber'];
     const cpf = params['route']['params']['params']['cpf'];
     const fullName = params['route']['params']['params']['fullName'];
     const birthDay = params['route']['params']['params']['birthDay'];
+    const [editable, setEditable] = useState(true);
     const modalizeRef = useRef<Modalize>(null);
 
     useEffect(() => {
@@ -67,21 +66,17 @@ export function AndressScreen(params){
             setCepValidate(2)
         } else if (!error) {
             setCepValidate(3)
+            setEditable(false)
             modalizeRef.current?.open()
+            setTimeout(() => {
+                setEditable(true)
+            }, 3000);
         }
 
-        const allFilledCorrect = cepValidate === 3 && houseNumber.length > 0
-
-        if (allFilledCorrect) {
-            setDisabledButton(false)          
-        } else {
-            setDisabledButton(true)
-        }
-
-
-    }, [cep, houseNumber, error, cepValidate])
+    }, [cep, error, cepValidate])
 
     function handleButtonPressContinue(){
+        setIsLoading(true)
         navigation.navigate('Password', {
             params: {
                 email: email,
@@ -94,10 +89,9 @@ export function AndressScreen(params){
                 city: city,
                 district: district,
                 street: street,
-                houseNumber: houseNumber,
-                
             }
         })
+        setIsLoading(false)
     }
 
     return(
@@ -111,6 +105,7 @@ export function AndressScreen(params){
                     value={cep} 
                     onChangeText={setCep}
                     password={false}
+                    editable={editable}
                     maxLength={9}
                     keyboardType={"numeric"}
                     validate={cepValidate}
@@ -142,7 +137,7 @@ export function AndressScreen(params){
                         <ButtonWhite
                             title={"Confirmar endereço"}
                             onPressIn={handleButtonPressContinue}
-                            isLoading={false}
+                            isLoading={loading}
                             disabled={false}
                         ></ButtonWhite>
                         <Button 

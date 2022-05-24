@@ -34,6 +34,7 @@ export function EmailandNumberScreen(){
     const [disabledButton, setDisabledButton] = useState(true);
     const [disabledSecondButton, setDisabledSecondButton] = useState(true);
     const [userExist, setUserExist] = useState(false);
+    const [editable, setEditable] = useState(true);
     const modalizeRef = useRef<Modalize>(null);
 
     useEffect(() => {
@@ -56,7 +57,6 @@ export function EmailandNumberScreen(){
 
     useEffect(() => {
         handleButtonPressContinueCode()
-        console.log(confirmationCode)
     }, [confirmationCode])
 
     async function handleButtonPressContinueCode() {
@@ -74,6 +74,8 @@ export function EmailandNumberScreen(){
     }
 
     async function handleButtonPressContinue(){
+        setEditable(false)
+        setIsLoading(true)
         setUserExist(await UserExist(email, phoneNumber, 1))
         if (userExist) {
             modalizeRef.current?.open()
@@ -81,9 +83,11 @@ export function EmailandNumberScreen(){
             setConfirmationCode('')
             setNewEmail(email)
             modalizeRef.current?.open()
-            setIsLoading(true);
-            setIsLoading(false);
         }
+        setIsLoading(false)
+        setTimeout(() => {
+            setEditable(true)
+        }, 3000);
     }
 
     return(
@@ -98,6 +102,7 @@ export function EmailandNumberScreen(){
                     onChangeText={setEmail}
                     password={false}
                     maxLength={100}
+                    editable={editable}
                     keyboardType={"email-address"}
                     validate={emailValidate}
                     autoCapitalize={'none'}
@@ -108,6 +113,7 @@ export function EmailandNumberScreen(){
                     value={phoneNumber} 
                     onChangeText={setPhoneNumber}
                     password={false}
+                    editable={editable}
                     maxLength={15}
                     keyboardType={"phone-pad"}
                     validate={numberValidate}

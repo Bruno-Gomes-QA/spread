@@ -25,6 +25,16 @@ export const LogoArea = styled.View`
     justify-content: center;
     align-items: center;
 `
+
+export const ModalArea = styled.View`
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+`;
+
 export const InputText = styled.Text`
     font-size: 18px;
     color: #000;
@@ -34,9 +44,7 @@ export const InputText = styled.Text`
 `
 
 export const RecoverMeArea = styled.View`
-    width: 60%;
-    justify-content: center;
-    align-items: center;
+    width: 80%;
 `
 
 export const SignMessageButton = styled.TouchableOpacity`
@@ -56,11 +64,14 @@ export const SignMessageButtonTextBold =styled.Text`
     margin-left: 5px;
 `;
 
-export const RecoverPassword =styled.Text`
+export const RecoverPasswordText =styled.Text`
     font-size: 14px;
     color: #FD8033;
     font-weight: bold;
     padding-top: 10px;
+`;
+
+export const RecoverPasswordButton =styled.TouchableOpacity`
 `;
 
 export const PassowordInfo =styled.Text`
@@ -69,6 +80,22 @@ export const PassowordInfo =styled.Text`
     color: #FF0000;
     text-align: center;
     padding-bottom: 10px;
+`;
+
+export const ModalTitle =styled.Text`
+    font-size: 18px;
+    color: #000;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 15px;
+`;
+
+export const ModalText =styled.Text`
+    font-size: 12px;
+    color: #000;
+    margin-top: 15px;
+    width: 90%;
+    margin-bottom: 15px;
 `;
 
 

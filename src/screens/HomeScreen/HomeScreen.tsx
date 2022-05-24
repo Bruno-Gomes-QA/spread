@@ -24,12 +24,11 @@ export function HomeScreen(){
     
     useEffect(() => {
         userData()
-        console.log(retry)
     },[retry])   
 
     async function userData() {
         const user = await checkCurrentUser()
-        const userInfo = await getUserInfo(user)
+        const userInfo = await getUserInfo(user['email'])
         if (userInfo) {
             setBalance(userInfo['balance'])
         } else {
