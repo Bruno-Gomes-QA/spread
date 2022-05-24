@@ -29,6 +29,7 @@ export function CpfFullNameScreen(params){
     const [disabledButton, setDisabledButton] = useState(false);
     const email = params['route']['params']['params']['email'];
     const phoneNumber = params['route']['params']['params']['phoneNumber'];
+    const [editable, setEditable] = useState(true);
     const modalizeRef = useRef<Modalize>(null);
 
     useEffect(() => {
@@ -48,6 +49,8 @@ export function CpfFullNameScreen(params){
     }, [cpf, cpfValidate, fullName, fullNameValidate, birthDay, birthDayValidate])
 
     async function handleButtonPressContinue(){
+        setEditable(false)
+        setIsLoading(true)
         const userExist = await UserExist('nenhum', 'nenhum', cpf)
         if (userExist) {
             modalizeRef.current?.open()
@@ -62,6 +65,10 @@ export function CpfFullNameScreen(params){
                 }
             })
         }
+        setIsLoading(false)
+        setTimeout(() => {
+            setEditable(true)
+        }, 3000);
     }
 
     return(
@@ -76,6 +83,7 @@ export function CpfFullNameScreen(params){
                         value={cpf} 
                         onChangeText={setCPF}
                         password={false}
+                        editable={editable}
                         maxLength={14}
                         keyboardType={"numeric"}
                         validate={cpfValidate}
@@ -86,6 +94,7 @@ export function CpfFullNameScreen(params){
                         placeholder='Digite seu nome'
                         value={fullName} 
                         onChangeText={setFullName}
+                        editable={editable}
                         password={false}
                         maxLength={100}
                         keyboardType={"default"}
@@ -97,6 +106,7 @@ export function CpfFullNameScreen(params){
                         placeholder='Data de Nascimento'
                         value={birthDay} 
                         onChangeText={setBirthDay}
+                        editable={editable}
                         password={false}
                         maxLength={10}
                         keyboardType={"numeric"}

@@ -23,6 +23,10 @@ export const ModalArea = styled.View`
     margin-bottom: 10px;
 `;
 
+export const RecoverMeArea = styled.View`
+    width: 80%;
+`
+
 export const CepArea = styled.View`
     padding: 10px;
     width: 90%;

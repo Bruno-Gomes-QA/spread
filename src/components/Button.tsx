@@ -43,7 +43,7 @@ export default ({title, onPressIn, isLoading, disabled}) => {
     } else {
         return (
             <TouchableOpacityButtonEnable
-                disabled={disabled}
+                disabled={isLoading}
                 onPressIn={onPressIn} 
             >
                 {isLoading? (

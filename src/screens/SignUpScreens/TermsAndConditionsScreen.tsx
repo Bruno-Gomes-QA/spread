@@ -18,15 +18,6 @@ export function TermsAndConditionsScreen(){
     
     const {signUp} = useAuth();
     const navigation = useNavigation();
-    const [loading, setIsLoading] = useState(false);
-    const [email, setEmail] = useState('');
-    const [emailValidate, setEmailValidate] = useState(1);
-    const [password, setPassword] = useState('');
-    const [passwordValidate, setPasswordValidate] = useState(1);
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [confirmPasswordValidate, setConfirmPasswordValidate] = useState(1);
-    const [infoPassword, setInfoPassword] = useState(false);
-    const [infoConfirmPassword, setInfoConfirmPassword] = useState(false);
     const [disabledButton, setDisabledButton] = useState(false);
     const [isTermsSelected, setTermsSelection] = useState(false);
     const [isConditionsSelected, setConditionsSelection] = useState(false);
@@ -70,7 +61,7 @@ export function TermsAndConditionsScreen(){
                     ></CheckBox>
             </TermsConditionsArea>
             <Button 
-                isLoading={loading} 
+                isLoading={false} 
                 title='Continuar' 
                 onPressIn={() => navigation.navigate('EmailandNumber')}
                 disabled={disabledButton}

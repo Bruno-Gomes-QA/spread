@@ -81,16 +81,16 @@ export const AuthProvider: React.FC = ({children}) => {
         }
     }
 
-    async function changePassword(email, password)
+    async function changePassword(email, newPassword)
     {
         try {
-            const user = await authService.changePassword(email, password);
+            const user = await authService.changePassword(email, newPassword);
 
             setAuth(user);
             
             return user;
         } catch (error) {
-            Alert.alert(error.message, 'Tente novamente');
+            Alert.alert('Erro desconhecido', 'Tente novamente mais tarde');
         }
     }
 

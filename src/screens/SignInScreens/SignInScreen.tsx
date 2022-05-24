@@ -17,7 +17,8 @@ import {
     SignMessageButton,
     SignMessageButtonText,
     SignMessageButtonTextBold,
-    RecoverPassword,
+    RecoverPasswordButton,
+    RecoverPasswordText,
 } from './style';
 
 export function SignInScreen(){
@@ -30,7 +31,7 @@ export function SignInScreen(){
     const [mailValidate, setEmailValidate] = useState(1);
     const [password, setPassword] = useState('');
     const [passwordValidate, setPasswordValidate] = useState(1);
-    const [isSelected, setSelection] = useState(false);
+    const [isSelected, setSelection] = useState(true);
 
     useEffect(() =>{
 
@@ -42,7 +43,7 @@ export function SignInScreen(){
         } else {
             setDisabledButton(true)
         }
-    }, [email, password])
+    }, [email, password, mailValidate, passwordValidate])
 
     function handleButtonPressSignIn(){
         setIsLoading(true);
@@ -52,15 +53,6 @@ export function SignInScreen(){
 
     function handleButtonPressSignUp(){
         navigation.navigate('WelcomeScreen');
-    }
-
-    function handleSelect(){
-        if (isSelected === true) {
-            setSelection(false)
-        } else {
-            setSelection(true)
-        }
-
     }
 
     return(
@@ -88,19 +80,18 @@ export function SignInScreen(){
                         placeholder='********' 
                         value={password} 
                         onChangeText={setPassword}
-                        password={true}
-                        maxLength={18}
+                        password={isSelected}
+                        maxLength={100}
                         keyboardType={"default"}
                         validate={passwordValidate}
                         autoCapitalize={'none'}
                     />
                     <RecoverMeArea>
                         <CheckBox 
-                            onPressIn={handleSelect}
-                            Check={isSelected}
-                            Title={'Lembrar de mim'}
+                            onPressIn={() => setSelection(!isSelected)}
+                            Check={!isSelected}
+                            Title={'Exibir Senha'}
                         >
-
                         </CheckBox>
                     </RecoverMeArea>
                     <Button 
@@ -109,7 +100,11 @@ export function SignInScreen(){
                         onPressIn={handleButtonPressSignIn}
                         disabled={disabledButton}
                     />
-                    <RecoverPassword>Esqueci minha senha</RecoverPassword>
+                    <RecoverPasswordButton
+                        onPressIn={() => navigation.navigate('RecoverMe')}
+                    >
+                        <RecoverPasswordText>Esqueci minha senha</RecoverPasswordText>
+                    </RecoverPasswordButton>
                 </InputArea>
                 <SignMessageButton onPressIn={handleButtonPressSignUp}>
                     <SignMessageButtonText>Ainda não possui uma conta?</SignMessageButtonText>

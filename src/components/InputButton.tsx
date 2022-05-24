@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ({Icon, placeholder, value, onChangeText, password, maxLength, keyboardType, validate, autoCapitalize}) => {
+export default ({Icon, placeholder, value, onChangeText, password, maxLength, keyboardType, validate, autoCapitalize, editable}) => {
     var colorIcon
     if(validate === 1) {
         colorIcon = 'black'
@@ -40,6 +40,7 @@ export default ({Icon, placeholder, value, onChangeText, password, maxLength, ke
             <TextInput
                 style={styles.textinput}
                 placeholder={placeholder}
+                editable={editable}
                 value={value}
                 secureTextEntry={password}
                 onChangeText={onChangeText}

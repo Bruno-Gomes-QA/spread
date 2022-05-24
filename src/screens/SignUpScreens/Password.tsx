@@ -4,6 +4,7 @@ import SpreadLogo from "../../../assets/spreadname.svg"
 import Button from '../../components/Button';
 import InputButton from '../../components/InputButton';
 import { useAuth } from '../../contexts/Auth';
+import CheckBox from '../../components/CheckBox';
 import { ValidarPassword } from '../../components/Checks';
 import {
     Container,
@@ -13,6 +14,7 @@ import {
     SignMessageButton,
     SignMessageButtonText,
     SignMessageButtonTextBold,
+    RecoverMeArea,
 } from './style';
 import { setNewUserData } from '../../services/firestoreService';
 
@@ -27,6 +29,7 @@ export function PasswordScreen(params){
     const [confirmPasswordValidate, setConfirmPasswordValidate] = useState(1);
     const [infoPassword, setInfoPassword] = useState(false);
     const [infoConfirmPassword, setInfoConfirmPassword] = useState(false);
+    const [isSelected, setSelection] = useState(true);
     const [disabledButton, setDisabledButton] = useState(false);
     const email = params['route']['params']['params']['email'];
     const phoneNumber = params['route']['params']['params']['phoneNumber'];
@@ -38,7 +41,6 @@ export function PasswordScreen(params){
     const city = params['route']['params']['params']['city'];
     const district = params['route']['params']['params']['district'];
     const street = params['route']['params']['params']['street'];
-    const houseNumber = params['route']['params']['params']['houseNumber'];
     
     useEffect(() => {
 
@@ -66,7 +68,7 @@ export function PasswordScreen(params){
 
     function handleButtonPressSignUp(){
         setIsLoading(true);
-        setNewUserData(email, phoneNumber, cpf, fullName, birthDay, cep, state, city, district, street, houseNumber)
+        setNewUserData(email, password, phoneNumber, cpf, fullName, birthDay, cep, state, city, district, street)
         signUp(email, password);
         setIsLoading(false);
 
@@ -96,12 +98,20 @@ export function PasswordScreen(params){
                         placeholder='Confirme sua senha'
                         value={confirmPassword} 
                         onChangeText={setConfirmPassword}
-                        password={true}
+                        password={isSelected}
                         maxLength={100}
                         keyboardType={"default"}
                         validate={confirmPasswordValidate}
                         autoCapitalize={'none'}
                     />
+                    <RecoverMeArea>
+                        <CheckBox 
+                            onPressIn={() => setSelection(!isSelected)}
+                            Check={!isSelected}
+                            Title={'Exibir Senha'}
+                        >
+                        </CheckBox>
+                    </RecoverMeArea>
                     <Button 
                         isLoading={loading} 
                         title='Finalizar Cadastro' 

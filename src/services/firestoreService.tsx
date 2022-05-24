@@ -1,14 +1,13 @@
 import firebase from '../config/firebaseconfig';
 import { doc, setDoc, getDoc, getDocs, updateDoc, collection, query, where } from 'firebase/firestore/lite';
-import encrypt from '../config/encrypt';
-import * as Crypto from 'expo-crypto';
 
 const db = firebase.db
 
-export async function setNewUserData (email, phoneNumber, cpf, fullName, birthDay, cep, state, city, district, street, houseNumber) {
+export async function setNewUserData (email, password, phoneNumber, cpf, fullName, birthDay, cep, state, city, district, street) {
 
     const userData = {
         email: email,
+        password: password,
         phone_number: phoneNumber,
         cpf: cpf,
         full_name: fullName,
@@ -19,7 +18,6 @@ export async function setNewUserData (email, phoneNumber, cpf, fullName, birthDa
         city: city,
         district: district,
         street: street,
-        house_number: houseNumber,
         balance: 0,
         spreading: 0,
         terms: true,
@@ -32,6 +30,15 @@ export async function setNewUserData (email, phoneNumber, cpf, fullName, birthDa
     const userDataRef = doc(db, userDataPath);
     
     return await setDoc(userDataRef, userData);
+}
+
+export async function setNewPassword (email, password) {
+    
+    const userRef = doc(db, "User", email);
+
+    await updateDoc(userRef, {
+        password: password
+    });
 }
 
 export async function setNewWithdraw (email) {
@@ -63,16 +70,15 @@ export async function setNewWithdraw (email) {
     await setDoc(withdrawRegistrerRef, userData);
 }
 
-export async function getUserInfo (user) {
+export async function getUserInfo (email) {
 
-    const docRef = doc(db, "User", user.email);
+    const docRef = doc(db, "User", email);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists) {
         return docSnap.data()
     } else {
         return false
     }
-
 }
 
 export async function UserExist (email, phoneNumber, cpf) {

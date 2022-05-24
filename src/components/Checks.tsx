@@ -154,7 +154,7 @@ export function ValidarEmail (email) {
 
 export function ValidarPassword (password) {
 
-    const passwordRegex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,18}$$"
+    const passwordRegex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,100}$$"
     const passwordCorrect = password.match(passwordRegex)
 
     if (password === '') {
