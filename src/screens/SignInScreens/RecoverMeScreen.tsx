@@ -95,7 +95,10 @@ export function RecoverMeScreen(){
     function handleButtonPressRocoverMe(){
         setIsLoading(true);
         changePassword(email, password);
-        setIsLoading(false);
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 3000);
+
     }
 
     function handleButtonPressConfirmation(){

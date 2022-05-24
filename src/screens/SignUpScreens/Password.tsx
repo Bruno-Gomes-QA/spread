@@ -86,7 +86,7 @@ export function PasswordScreen(params){
                         placeholder='Digite sua senha'
                         value={password} 
                         onChangeText={setPassword}
-                        password={true}
+                        password={isSelected}
                         maxLength={100}
                         keyboardType={"default"}
                         validate={passwordValidate}
