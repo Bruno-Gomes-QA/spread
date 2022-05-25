@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import ButtonIcon from "../../components/ButtonIcon";
+import ButtonWhite from "../../components/ButtonWhite";
+import { Modalize } from "react-native-modalize";
+import { FlatList } from "react-native-gesture-handler";
 import LottieView from 'lottie-react-native';
 import {
     Container,
     ButtonViewArea, 
-    View, 
+    InitCodeView, 
+    ExpertCodeView,
+    InfluencerCodeView,
     ButtonView, 
     TitleText, 
     SubTitleText 
 } from './style';
+import { createPayment } from "../../services/mercadopagoService";
 
 export function CodeSlideScreen(){
 
@@ -31,31 +37,14 @@ export function CodeSlideScreen(){
             "title": "O próximo passo",
             "description": "Adquira um código com a melhor opção para você e começe a ganhar agora mesmo.",
             "animation": require('../../../assets/buyspreadcode.json'),
-        },
-        {
-            "key": "4",
-            "title": "Importante Lembrar",
-            "description": "Seu código possui uma data de validade dessa maneira sendo necessário renovar periodicamente.",
-            "animation": require('../../../assets/expiratetiming.json'),
-        },
-        {
-            "key": "4",
-            "title": "Spread!",
-            "description": "Agora comece a espalhar para amigos e familiares e ganhe recompensas para cada novo usuário que utilizar seu código.",
-            "animation": require('../../../assets/spreading.json'),
-        },
-        {
-            "key": "5",
-            "title": "Transfira seus ganhos!",
-            "description": "Você pode realizar pix para seus amigos ou contas de sua titularidade de forma rápida e segura",
-            "animation": require('../../../assets/pixwithdraw.json'),
-        },
+        }
       ]
 
     const navigation = useNavigation();
     const [initSignUp, setInitSignUp] = useState(false);
     const [card, setCard] = useState(0);
     const [lastCard, setLastCard] = useState(false);
+    const modalizeRef = useRef<Modalize>(null);
 
     function nextCard () {
         if (card === 5) {
@@ -81,55 +70,32 @@ export function CodeSlideScreen(){
     }
     return (
         <Container>
-            <TitleText>
-                {DATA[card].title}
-            </TitleText>
-            <SubTitleText>
-                {DATA[card].description}
-            </SubTitleText>
-            <View>
-                <LottieView
-                    source={DATA[card].animation}
-                    autoPlay={true}
-                    loop={true}
-                />
-            </View>
-            {lastCard ? 
+            <InitCodeView
+                onPressIn={createPayment('Teste', 100)}
+            >
+            </InitCodeView>
+            <Modalize
+                ref={modalizeRef}
+                withHandle={false}
+                adjustToContentHeight={true}
+            >
                 <ButtonView>
+                    <ButtonWhite
+                        title={"Fechar"}
+                        onPressIn={() => modalizeRef.current?.close()}
+                        isLoading={false}
+                        disabled={false}
+                    ></ButtonWhite>
                     <ButtonIcon
-                            title={"Torna-se Spread"}
-                            onPressIn={nextCard}
+                            title={"Selecionar"}
+                            onPressIn={() => console.log('Selecionando')}
                             isLoading={false}
                             icon={'rocket'}
                             disabled={false}
                         >
                     </ButtonIcon>
                 </ButtonView>
-                
-            :
-                <ButtonView>
-                    <ButtonViewArea>
-                        <ButtonIcon
-                                title={"Anterior"}
-                                onPressIn={prevCard}
-                                isLoading={false}
-                                icon={'arrow-left-circle'}
-                                disabled={false}
-                            >
-                        </ButtonIcon>
-                    </ButtonViewArea>
-                    <ButtonViewArea>
-                        <ButtonIcon
-                                title={"Próximo"}
-                                onPressIn={nextCard}
-                                isLoading={false}
-                                icon={'arrow-right-circle'}
-                                disabled={false}
-                            >
-                        </ButtonIcon>
-                    </ButtonViewArea>
-                </ButtonView>
-            }
+            </Modalize>
         </Container>
     )
 }

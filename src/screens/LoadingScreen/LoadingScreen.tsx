@@ -16,7 +16,7 @@ export function LoadingScreen(){
                 })
             : 
                 navigation.reset({
-                    routes:[{name:'WelcomeScreen'}]
+                    routes:[{name:'CodeSlideScreen'}]
                 })
             }
         }, 3000);
