@@ -2,7 +2,6 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LoadingScreen } from '../screens/LoadingScreen/LoadingScreen';
 import { WelcomeScreen } from '../screens/WelcomeScreen/WelcomeScreen';
-import { CodeSlideScreen } from '../screens/CodeSlideScreen/CodeSlideScreen';
 import { SignInScreen } from '../screens/SignInScreens/SignInScreen';
 import { RecoverMeScreen } from '../screens/SignInScreens/RecoverMeScreen';
 import { TermsAndConditionsScreen } from '../screens/SignUpScreens/TermsAndConditionsScreen';
@@ -20,9 +19,8 @@ export function AuthStack(){
                 headerShown: false
             }}
         >
-            <Stack.Screen name="LoadingScreen" component={LoadingScreen}/>
-            <Stack.Screen name="CodeSlideScreen" component={CodeSlideScreen}/>
-            <Stack.Screen name="WelcomeScreen" component={WelcomeScreen}/>    
+            <Stack.Screen name="Loading" component={LoadingScreen}/>
+            <Stack.Screen name="Welcome" component={WelcomeScreen}/>    
             <Stack.Screen name="SignIn" component={SignInScreen}/>
             <Stack.Screen name="RecoverMe" component={RecoverMeScreen}/>
             <Stack.Screen name="TermsAndConditions" component={TermsAndConditionsScreen}/>

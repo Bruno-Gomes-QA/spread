@@ -19,7 +19,7 @@ export const ContainerInit = styled.SafeAreaView`
 
 export const InitCodeView = styled.TouchableOpacity`
     background-color: #FD8033;
-    height: 90%;
+    height: 10%;
     width: 90%;
     margin: 2%;
     border-radius: 15px;

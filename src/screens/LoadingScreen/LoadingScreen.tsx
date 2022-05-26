@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/Auth";
 import LottieView from 'lottie-react-native';
 
 export function LoadingScreen(){
+    
     const {authData} = useAuth();
     const navigation = useNavigation();
 
@@ -12,11 +13,11 @@ export function LoadingScreen(){
         setTimeout(() => {
             {authData ?
                 navigation.reset({
-                    routes:[{name:'Home'}]
+                    routes:[{name:'CodeSlide'}]
                 })
             : 
                 navigation.reset({
-                    routes:[{name:'CodeSlideScreen'}]
+                    routes:[{name:'Welcome'}]
                 })
             }
         }, 3000);
