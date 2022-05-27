@@ -8,7 +8,7 @@ export async function createPayment(user) {
       {
         "items": [
             {
-                "title": "Spread Code",
+                "title": "Código Spread",
                 "currency_id": "BRL",
                 "picture_url": "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif",
                 "description": "Adquira agora seu código e comece a ganhar com aplicativo do spread",
@@ -16,6 +16,13 @@ export async function createPayment(user) {
                 "unit_price": 65.90,
             }
         ],
+        "back_urls": {
+          "success": "https://spread-api.vercel.app/",
+          "failure": "https://spread-api.vercel.app/",
+          "pending": "https://spread-api.vercel.app/"
+        },
+        "auto_return": "approved",
+        "binary_mode": true,
         "payer": {
             "name": user.full_name,
             "email": user.email,
@@ -32,8 +39,13 @@ export async function createPayment(user) {
                 "zip_code": user.cep.replace(/\D/g, ''),
             }
         },
+        "payment_methods": {
+          "excluded_payment_types": [
+              {"id": "ticket"}
+          ],
+          "installments": 3
+      },
         "statement_descriptor": "Spread Indicações",
-        "external_reference": "Reference_1234",
       },
   }
 
