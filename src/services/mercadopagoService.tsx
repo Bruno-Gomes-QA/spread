@@ -1,6 +1,6 @@
 const config = require('../config/mercadopago.json')
 
-export async function createPayment(user) {
+export async function createPayment(user, value) {
 
   const data = {
     access_token: config.secretKey,
@@ -13,7 +13,7 @@ export async function createPayment(user) {
                 "picture_url": "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif",
                 "description": "Adquira agora seu código e comece a ganhar com aplicativo do spread",
                 "quantity": 1,
-                "unit_price": 65.90,
+                "unit_price": value,
             }
         ],
         "back_urls": {

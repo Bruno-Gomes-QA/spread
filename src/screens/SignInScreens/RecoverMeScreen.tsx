@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react';
 import { Modalize } from 'react-native-modalize';
 import SpreadLogo from "../../../assets/spreadname.svg";
 import CheckBox from '../../components/CheckBox';
-import LottieView from 'lottie-react-native';
 import Button from '../../components/Button';
 import InputButton from '../../components/InputButton';
 import { useAuth } from '../../contexts/Auth';
@@ -261,7 +260,7 @@ export function RecoverMeScreen(){
                     <Button 
                         isLoading={loading} 
                         title='Cadastrar-se'
-                        onPressIn={() => navigation.navigate('WelcomeScreen')}
+                        onPressIn={() => navigation.navigate('Welcome')}
                         disabled={false}
                     />    
                 </ModalArea>
