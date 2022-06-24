@@ -80,7 +80,7 @@ export function PasswordScreen(params){
                 <HeaderArea></HeaderArea>
                 <SpreadLogo width="100%" height={120} ></SpreadLogo>
                 <InputArea>
-                    {infoPassword ? <PassowordInfo>Mínimo 8 caracteres, contendo (A-Z, a-z, 0-9, #?!@$%^&*-)</PassowordInfo> : <></>}
+                    {infoPassword ? <PassowordInfo>Sua senha deve conter no mínimo 8 caracteres</PassowordInfo> : <></>}
                     <InputButton
                         Icon='lock'
                         placeholder='Digite sua senha'

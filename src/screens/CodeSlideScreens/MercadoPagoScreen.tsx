@@ -25,7 +25,7 @@ export function MercadoPagoScreen(params){
             style={{flex: 1, marginTop: 30}}
             source={{ uri: uri }}
             startInLoadingState={true}
-            onNavigationStateChange={state=>stateChange(state)}
+            onNavigationStateChange={state => stateChange(state)}
         />
     )
 }

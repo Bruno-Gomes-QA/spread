@@ -101,3 +101,16 @@ export async function UserExist (email, phoneNumber, cpf) {
 
     return emailornumberorcpfExist
 }
+
+export async function ValideCode (code) {
+
+    let valideCode = false
+
+    const collectionRef = collection(db, "Codes")
+    const codeQuery = query(collectionRef, where("code", "==", code));
+
+    const codeResult = await getDocs(codeQuery);
+    if(codeResult.size > 0) {valideCode = true};
+    console.log(valideCode)
+    return valideCode
+}
