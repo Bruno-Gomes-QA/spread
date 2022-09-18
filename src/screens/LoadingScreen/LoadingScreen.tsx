@@ -3,20 +3,32 @@ import { useNavigation } from "@react-navigation/native";
 import { Container, View } from './style'
 import { useAuth } from "../../contexts/Auth";
 import LottieView from 'lottie-react-native';
+import { UserHaveCode } from "../../services/firestoreService";
 
 export function LoadingScreen(){
+    
     const {authData} = useAuth();
     const navigation = useNavigation();
 
     useEffect(() => {
-        setTimeout(() => {
-            {authData ?
-                navigation.reset({
-                    routes:[{name:'Home'}]
+        setTimeout(async () => {
+            if (authData) {
+                await UserHaveCode(authData.user['email']).then((hasCode) => {
+                    console.log(hasCode)
+                    {hasCode? (
+                        navigation.reset({
+                            routes:[{name:'Home'}]
+                        })
+                    ):(
+                        navigation.reset({
+                            routes:[{name:'CodeSlide'}]
+                        })
+                    )}
                 })
-            : 
+
+            } else { 
                 navigation.reset({
-                    routes:[{name:'WelcomeScreen'}]
+                    routes:[{name:'Welcome'}]
                 })
             }
         }, 3000);

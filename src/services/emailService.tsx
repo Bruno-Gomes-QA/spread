@@ -6,7 +6,7 @@ const db = firebase.db
 
 export async function setNewEmail (email) {
 
-    const code = Math.floor(Math.random() * 999999) + 100000
+    const code = Math.floor(Math.random() * 999999) + 99999
     const emailData = {
         to: [email],
         message: {

@@ -91,7 +91,7 @@ export const TitleText = styled.Text`
 
 export const SubTitleText = styled.Text`
     font-size: 15px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     margin-left: 20px;
     margin-right: 20px;
     text-align: left;

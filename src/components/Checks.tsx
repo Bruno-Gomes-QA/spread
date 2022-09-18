@@ -159,7 +159,7 @@ export function ValidarPassword (password) {
 
     if (password === '') {
         return 1
-    } else if (passwordCorrect) {
+    } else if (password.length > 7) {
         return 3
     } else {
         return 2

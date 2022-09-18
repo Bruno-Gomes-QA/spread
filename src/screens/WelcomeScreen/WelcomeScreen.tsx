@@ -150,9 +150,9 @@ export function WelcomeScreen(){
                 </LogoArea>
                 <InitView>
                     <LottieView
-                            source={require('../../../assets/networking.json')}
-                            autoPlay={true}
-                            loop={true}
+                        source={require('../../../assets/networking.json')}
+                        autoPlay={true}
+                        loop={true}
                     />
                 </InitView>
                 <ButtonsArea>
