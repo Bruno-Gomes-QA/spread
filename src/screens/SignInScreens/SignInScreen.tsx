@@ -52,7 +52,7 @@ export function SignInScreen(){
     }
 
     function handleButtonPressSignUp(){
-        navigation.navigate('WelcomeScreen');
+        navigation.navigate('Welcome');
     }
 
     return(

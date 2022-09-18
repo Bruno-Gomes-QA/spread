@@ -32,6 +32,20 @@ export async function setNewUserData (email, password, phoneNumber, cpf, fullNam
     return await setDoc(userDataRef, userData);
 }
 
+export async function setNewCodeData (email) {
+
+    const code = Math.random().toString(36).replace(/[^a-z]+/g, '')
+    const codeData = {
+        email: email,
+        code: code
+    };
+    
+    const codeDataPath = "Codes/"+email;
+    const codeDataRef = doc(db, codeDataPath);
+    
+    return await setDoc(codeDataRef, codeData);
+}
+
 export async function setNewPassword (email, password) {
     
     const userRef = doc(db, "User", email);
@@ -113,4 +127,16 @@ export async function ValideCode (code) {
     if(codeResult.size > 0) {valideCode = true};
     console.log(valideCode)
     return valideCode
+}
+
+export async function UserHaveCode (email) {
+
+    //let x = 1
+    const docRef = doc(db, "Codes", email);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists) {
+        return docSnap.data()
+    } else {
+        return false
+    }
 }

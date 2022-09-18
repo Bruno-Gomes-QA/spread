@@ -1,13 +1,9 @@
 import styled from 'styled-components/native'; 
-import { Dimensions } from 'react-native';
-
-const {width} = Dimensions.get('window') 
 
 export const Container = styled.SafeAreaView`
-    background-color: #FD8033;
+    padding-top: 20%;
+    background-color: #FFF;
     justify-content: center;
-    align-items: center;
-    align-content: center;
     flex: 1;
 `
 
@@ -31,8 +27,17 @@ export const IconArea = styled.View`
     margin-top: 5%;
 `
 
+export const Area = styled.View`
+    background-color: #FFF;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 60%;
+    width: 100%;
+`
+
 export const TitleText = styled.Text`
-    font-size: 25px;
+    font-size: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
     font-weight: 900;

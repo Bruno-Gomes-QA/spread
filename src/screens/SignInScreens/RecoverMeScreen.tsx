@@ -173,7 +173,7 @@ export function RecoverMeScreen(){
                         <ModalTitle>
                             Informe sua nova senha
                         </ModalTitle>
-                        {infoPassword ? <PassowordInfo>Mínimo 8 caracteres, contendo (A-Z, a-z, 0-9, #?!@$%^&*-)</PassowordInfo> : <></>}
+                        {infoPassword ? <PassowordInfo>Sua senha deve conter no mínimo 8 caracteres</PassowordInfo> : <></>}
                         <InputButton
                             Icon='lock'
                             placeholder='Digite sua senha'

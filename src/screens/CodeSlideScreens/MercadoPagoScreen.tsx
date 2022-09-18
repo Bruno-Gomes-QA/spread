@@ -22,7 +22,7 @@ export function MercadoPagoScreen(params){
 
     return (
         <WebView 
-            style={{flex: 1, marginTop: 30}}
+            style={{flex: 1, marginTop: 30, marginBottom: 30}}
             source={{ uri: uri }}
             startInLoadingState={true}
             onNavigationStateChange={state => stateChange(state)}

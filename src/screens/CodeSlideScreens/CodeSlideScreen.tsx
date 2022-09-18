@@ -180,6 +180,7 @@ export function CodeSlideScreen(){
                             autoCapitalize={'characters'}
                         />
                         <SubTitleText>• Caso alguém tenha te indicado o Spread informe o código acima e receba 10% de desconto </SubTitleText>
+                        <SubTitleText>• Se ninguém indicou o Spread fique tranquilo, é possível informar um código dentro do app e receber cashback de 10%</SubTitleText>
                         <IconArea>
                         <Button 
                             isLoading={loading} 
