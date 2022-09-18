@@ -42,3 +42,5 @@ Para rodar o projeto:
     }
 
 8 - As secrets acima correspondem ao banco e api para teste.
+
+9 - Agora basta rodar "npm start" e acessar o app expo go para testar.
