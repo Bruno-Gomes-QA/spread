@@ -1,10 +1,15 @@
 Para rodar o projeto:
 
 1 - git clone git@github.com:Bruno-Gomes-QA/spread.git
+
 2 - cd .\spread
+
 3 - npm install
+
 4 - Criar em "src" uma pasta chamada "config"
+
 5 - Criar dois arquivos chamados "firebaseconfig.js" e "mercadopago.json"
+
 6 - Em "firebaseconfig.js" inserir:
 
     import { initializeApp } from "firebase/app";
